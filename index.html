@@ -669,6 +669,51 @@
       
         
           <p>胡编乱造，以下就是我的理解，看注释</p>
+<pre><code>public static void main(String[] args) {
+    try {
+        File file = new File(&quot;java.txt&quot;);
+        FileInputStream fis = new FileInputStream(file);
+        InputStreamReader isr = new InputStreamReader(fis, &quot;UTF-8&quot;);
+
+        File new_file = new File(&quot;java_new_buffer.txt&quot;);
+        FileOutputStream fos = new FileOutputStream(new_file);
+        OutputStreamWriter osw = new OutputStreamWriter(fos, &quot;UTF-8&quot;);
+
+        //将字符流读取对象转换成带缓冲的读取对象
+        BufferedReader br = new BufferedReader(isr);
+        // 无换行符的写入，每回都是读取一行
+        BufferedWriter bw = new BufferedWriter(osw);
+        // 带有换行符的打印
+        //PrintWriter pw = new PrintWriter(osw);
+
+        //readLine()的返回结果是一个String,当返回null的时候说明读取完成
+        String input = &quot;&quot;;
+        while ((input = br.readLine()) != null) {
+        //pw.println(input);
+            bw.write(input);
+        }
+
+        //pw.flush();
+        bw.close();
+        br.close();
+        osw.close();
+        fos.close();
+        isr.close();
+        fis.close();
+
+        System.out.println(&quot;拷贝完成&quot;);
+    } catch (FileNotFoundException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } catch (UnsupportedEncodingException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+}
+</code></pre>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/#more" rel="contents">
@@ -815,6 +860,51 @@
       
         
           <p>胡编乱造，以下就是我的理解，看注释</p>
+<pre><code>public static void main(String[] args) {
+    try {
+        // 读取文件对象
+        File file = new File(&quot;java.txt&quot;);
+        // 字节流读取
+        FileInputStream fis = new FileInputStream(file);
+        // 将字节流转换成字符流对象，编码格式默认为GBK，修改为UTF-8
+        InputStreamReader isr = new InputStreamReader(fis, &quot;UTF-8&quot;);
+
+        // 写入文件对象
+        File new_file = new File(&quot;java_new.txt&quot;);
+        // 字节流写入
+        FileOutputStream fos = new FileOutputStream(new_file);
+        // 将字节流转换成字符流对象，编码格式默认为GBK，修改为UTF-8
+        OutputStreamWriter osw = new OutputStreamWriter(fos, &quot;UTF-8&quot;);
+
+        // 字符流的读取，我们当然要用字符数组来存储了，同样的字符数组的大小也是因文件大小而定，多次调试，来选择合适的大小可以提高读取和写入效率
+        char[] input = new char[100];
+        int l = 0;
+        //此处用while的意思是因为我们要读取的文件太大，而每回的数组存储有限，所以需要用while循环来多次读取。我们可以把鼠标放到read()的方法上看到他的返回值是一个int，然后后边介绍说，如果读取返回为-1的时候说明读取完成，根据这个我们可以写出下边的代码
+        while ((l = isr.read(input)) != -1) {
+            //我们为什么要用这个构造呢，因为我们并不清楚要读的字符到底有多少，而每回读取的字符数量又是固定的，为了避免浪费不必要的内存，我们采用以下构造。
+            //参数含义1字符数组       2开始写入字符的偏移量      3写入的字符长度
+            osw.write(input, 0, l);
+        }
+
+        //关闭流，先打开后关闭，后打卡先关闭
+        osw.close();
+        fos.close();
+        isr.close();
+        fos.close();
+
+        System.out.println(&quot;拷贝完成&quot;);
+    } catch (FileNotFoundException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } catch (UnsupportedEncodingException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+}
+</code></pre>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2017/02/10/java-io的使用之字符流的读取和写入（三）/#more" rel="contents">
