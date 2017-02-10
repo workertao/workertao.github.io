@@ -86,24 +86,18 @@
 
 
 
-<meta name="description" content="胡编乱造，以下就是我的理解。
-
-纯文本文件读取我们使用的是FileReader,通过查看源码我们发现他的父类是InputStreamReader，他的介绍也是为了方便读取字符文件，还记得我们读取char字符流的时候会用到InputStreamReader，可以联想到，其实FileReader就是对我们字符流读取和写入的封装。也就是说我们可以把字符流的代码换成FileReader就可以了。(如图)">
+<meta name="description" content="胡编乱造，以下就是我的理解。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java io的使用之纯文本文件的读取和写入（五）">
 <meta property="og:url" content="http://workertao.coding.me/2017/02/10/java-io的使用之纯文本文件的读取和写入（五）/index.html">
 <meta property="og:site_name" content="我啥时候可以手撕鬼子">
-<meta property="og:description" content="胡编乱造，以下就是我的理解。
-
-纯文本文件读取我们使用的是FileReader,通过查看源码我们发现他的父类是InputStreamReader，他的介绍也是为了方便读取字符文件，还记得我们读取char字符流的时候会用到InputStreamReader，可以联想到，其实FileReader就是对我们字符流读取和写入的封装。也就是说我们可以把字符流的代码换成FileReader就可以了。(如图)">
+<meta property="og:description" content="胡编乱造，以下就是我的理解。">
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y4.jpg">
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y5.jpg">
-<meta property="og:updated_time" content="2017-02-10T07:24:08.305Z">
+<meta property="og:updated_time" content="2017-02-10T10:21:16.283Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java io的使用之纯文本文件的读取和写入（五）">
-<meta name="twitter:description" content="胡编乱造，以下就是我的理解。
-
-纯文本文件读取我们使用的是FileReader,通过查看源码我们发现他的父类是InputStreamReader，他的介绍也是为了方便读取字符文件，还记得我们读取char字符流的时候会用到InputStreamReader，可以联想到，其实FileReader就是对我们字符流读取和写入的封装。也就是说我们可以把字符流的代码换成FileReader就可以了。(如图)">
+<meta name="twitter:description" content="胡编乱造，以下就是我的理解。">
 <meta name="twitter:image" content="http://ohdryj9ow.bkt.clouddn.com/y4.jpg">
 
 
@@ -379,6 +373,7 @@
       
         <p>胡编乱造，以下就是我的理解。</p>
 <p><img src="http://ohdryj9ow.bkt.clouddn.com/y4.jpg" alt="图1" title="图1"></p>
+<a id="more"></a>
 <p>纯文本文件读取我们使用的是FileReader,通过查看源码我们发现他的父类是InputStreamReader，他的介绍也是为了方便读取字符文件，还记得我们读取char字符流的时候会用到InputStreamReader，可以联想到，其实FileReader就是对我们字符流读取和写入的封装。也就是说我们可以把<br>字符流的代码换成FileReader就可以了。(如图)</p>
 <p><img src="http://ohdryj9ow.bkt.clouddn.com/y5.jpg" alt="图2" title="图2"></p>
 <p>以下是完整代码，运行发现没有问题，就是这么搞。</p>

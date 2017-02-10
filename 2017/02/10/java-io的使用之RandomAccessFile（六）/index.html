@@ -88,32 +88,26 @@
 
 <meta name="description" content="胡编乱造，以下就是我的理解。
 这个东西我也没用过，第一次接触，网上看了看，可以用于多线程的上传和下载，下边是我自己的理解。
-RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下什么意思。Random：随机  Access：访问File：文件随机访问文件，看上去英文是这个意思，然后我们点击查看他的源代码看下他的官方解释，英文水平有限，直接上百度了，看图。
-
-左侧是官方的代码注释">
+RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下什么意思。Random：随机  Access：访问File：文件随机访问文件，看上去英文是这个意思，然后我们点击查看他的源代码看下他的官方解释，英文水平有限，直接上百度了，看图。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java io的使用之RandomAccessFile（六）">
 <meta property="og:url" content="http://workertao.coding.me/2017/02/10/java-io的使用之RandomAccessFile（六）/index.html">
 <meta property="og:site_name" content="我啥时候可以手撕鬼子">
 <meta property="og:description" content="胡编乱造，以下就是我的理解。
 这个东西我也没用过，第一次接触，网上看了看，可以用于多线程的上传和下载，下边是我自己的理解。
-RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下什么意思。Random：随机  Access：访问File：文件随机访问文件，看上去英文是这个意思，然后我们点击查看他的源代码看下他的官方解释，英文水平有限，直接上百度了，看图。
-
-左侧是官方的代码注释">
+RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下什么意思。Random：随机  Access：访问File：文件随机访问文件，看上去英文是这个意思，然后我们点击查看他的源代码看下他的官方解释，英文水平有限，直接上百度了，看图。">
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y6.jpg">
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y7.jpg">
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y12.png">
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y13.png">
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y14.png">
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y15.png">
-<meta property="og:updated_time" content="2017-02-10T10:12:18.969Z">
+<meta property="og:updated_time" content="2017-02-10T10:22:29.315Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java io的使用之RandomAccessFile（六）">
 <meta name="twitter:description" content="胡编乱造，以下就是我的理解。
 这个东西我也没用过，第一次接触，网上看了看，可以用于多线程的上传和下载，下边是我自己的理解。
-RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下什么意思。Random：随机  Access：访问File：文件随机访问文件，看上去英文是这个意思，然后我们点击查看他的源代码看下他的官方解释，英文水平有限，直接上百度了，看图。
-
-左侧是官方的代码注释">
+RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下什么意思。Random：随机  Access：访问File：文件随机访问文件，看上去英文是这个意思，然后我们点击查看他的源代码看下他的官方解释，英文水平有限，直接上百度了，看图。">
 <meta name="twitter:image" content="http://ohdryj9ow.bkt.clouddn.com/y6.jpg">
 
 
@@ -390,6 +384,7 @@ RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下�
         <p>胡编乱造，以下就是我的理解。</p>
 <p>这个东西我也没用过，第一次接触，网上看了看，可以用于多线程的上传和下载，下边是我自己的理解。</p>
 <p>RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下什么意思。<br>Random：随机  <br>Access：访问<br>File：文件<br>随机访问文件，看上去英文是这个意思，然后我们点击查看他的源代码看下他的官方解释，英文水平有限，直接上百度了，看图。</p>
+<a id="more"></a>
 <p><img src="http://ohdryj9ow.bkt.clouddn.com/y6.jpg" alt="图1" title="图1"></p>
 <p>左侧是官方的代码注释，右侧为翻译结果，大概意思是说我们可以自定义访问文件的某一区间，或者修改某一区间的内容。看图↓↓↓↓↓</p>
 <p><img src="http://ohdryj9ow.bkt.clouddn.com/y7.jpg" alt="图2" title="图2"></p>
