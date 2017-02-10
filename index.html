@@ -271,6 +271,916 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/02/10/java-io的使用之RandomAccessFile（六）/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="杨涛">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://oif1jvh5f.bkt.clouddn.com/nkplxvq2rntpng.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="我啥时候可以手撕鬼子">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="我啥时候可以手撕鬼子" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/10/java-io的使用之RandomAccessFile（六）/" itemprop="url">
+                  java io的使用之RandomAccessFile（六）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-10T15:22:12+08:00">
+                2017-02-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/02/10/java-io的使用之RandomAccessFile（六）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/10/java-io的使用之RandomAccessFile（六）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>胡编乱造，以下就是我的理解。</p>
+<p>这个东西我也没用过，第一次接触，网上看了看，可以用于多线程的上传和下载，下边是我自己的理解。</p>
+<p>RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下什么意思。<br>Random：随机  <br>Access：访问<br>File：文件<br>随机访问文件，看上去英文是这个意思，然后我们点击查看他的源代码看下他的官方解释，英文水平有限，直接上百度了，看图。</p>
+<p><img src="http://ohdryj9ow.bkt.clouddn.com/y6.jpg" alt="图1" title="图1"></p>
+<p>左侧是官方的代码注释，右侧为翻译结果，大概意思是说我们可以自定义访问文件的某一区间，或者修改某一区间的内容。看图↓↓↓↓↓</p>
+<p><img src="http://ohdryj9ow.bkt.clouddn.com/y7.jpg" alt="图2" title="图2"></p>
+<p>这条虚线代表着一个文件，我们将他分成5个区间来读取/写入。<br>首先我们需要一个线程来执行写入，创建一个类继承Thread，实现构造函数，重写run方法。</p>
+<h1 id="RandomAccessFile写入某一区间流"><a href="#RandomAccessFile写入某一区间流" class="headerlink" title="RandomAccessFile写入某一区间流"></a>RandomAccessFile写入某一区间流</h1><pre><code>public class WriteFile extends Thread {
+//读取/写入的文件
+File file;
+//读取/写入的区间
+int block;
+//每个区间的长度，这个区间因文件大小而定，尽量避免浪费不必要的空间
+int L = 100;
+
+public WriteFile(File file, int block) {
+    this.file = file;
+    this.block = block;
+}
+
+@Override
+public void run() {
+    super.run();
+    try {
+        @SuppressWarnings(&quot;resource&quot;)
+        RandomAccessFile raf = new RandomAccessFile(file, &quot;rw&quot;);
+        raf.seek((block - 1) * L);
+        raf.writeBytes(&quot;this is block&quot; + block);
+        raf.writeBytes(&quot;\n&quot;);
+    } catch (FileNotFoundException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+}
+</code></pre><p>完成以上一套流程之后，我们来看run方法应该要执行什么。创建<br>RandomAccessFile对象，参数第一个为读取/写入的文件名，第二个是当前文件的执行权限，参数值有这么几个（”r”[只读]，”rw”[读写]，”rws”，”rwd”），后俩不知道啥意思，前俩就够用了。<br>seek()方法用来指定我们要读取/写入的区间。writeBytes()用来写入内容，参数为字符串还有好多写入的方法，针对不同的需求采用不同的写入方法就行。写入的线程写好以后，我们要在主方法中运行线程，</p>
+<pre><code>static File file = new File(&quot;test.txt&quot;);
+
+public static void main(String[] args) {
+    if (file.exists()) {
+        file.delete();
+    }
+    new WriteFile(file, 1).start();
+    new WriteFile(file, 2).start();
+    new WriteFile(file, 3).start();
+    new WriteFile(file, 4).start();
+    new WriteFile(file, 5).start();
+    }
+}
+</code></pre><p>同时开启5个线程去写入文件，分别写入到不同的区间，运行查看输出。</p>
+<p><img src="http://ohdryj9ow.bkt.clouddn.com/y12.png" alt="图3" title="图3"></p>
+<p>以上是写入的内容</p>
+<p><img src="http://ohdryj9ow.bkt.clouddn.com/y13.png" alt="图4" title="图4"></p>
+<p>以上是文件的大小，可以看到413个字节，细细想想我们就会知道，我们定义的每个区间大小为100个字节，如下定义↓↓↓</p>
+<pre><code>int L = 100;
+</code></pre><p>也就是说我们一共new了5个区间，在写入数据的时候，即使填不满整个区间，而还有后续区间的时候，即使填不满，这些空间也是会为当前区间保留的。而当到了第五个区间的时候，没有后续的操作区间，他只有13个字节，写入就等于写完了。所以文件大小就是413了。</p>
+<h1 id="RandomAccessFile读取某一区间流"><a href="#RandomAccessFile读取某一区间流" class="headerlink" title="RandomAccessFile读取某一区间流"></a>RandomAccessFile读取某一区间流</h1><pre><code>try {
+    RandomAccessFile raf = new RandomAccessFile(file, &quot;r&quot;);
+    raf.seek(300);
+    byte[] str = new byte[20];
+    raf.read(str);
+    System.out.println(new String(str));
+} catch (FileNotFoundException e) {
+    // TODO Auto-generated catch block
+    e.printStackTrace();
+} catch (IOException e) {
+    // TODO Auto-generated catch block
+    e.printStackTrace();
+}
+</code></pre><p>以上代码用来读取文件内容，可以看到RandomAccessFile()的第二个参数传的事”r”，意味着当前对象只能读，不能写。seek()移动到某一区间，这块参数传的300，也就是说从字节300开始读取。</p>
+<p>执行以上代码查看输出↓↓↓↓↓</p>
+<p><img src="http://ohdryj9ow.bkt.clouddn.com/y14.png" alt="图5" title="图5"></p>
+<p>为什么这块输出的事this is block4呢？看下图↓↓↓</p>
+<p><img src="http://ohdryj9ow.bkt.clouddn.com/y15.png" alt="图6" title="图6"></p>
+<p>知道为什么会输出this is block4了吧。机智…</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/02/10/java-io的使用之纯文本文件的读取和写入（五）/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="杨涛">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://oif1jvh5f.bkt.clouddn.com/nkplxvq2rntpng.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="我啥时候可以手撕鬼子">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="我啥时候可以手撕鬼子" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/10/java-io的使用之纯文本文件的读取和写入（五）/" itemprop="url">
+                  java io的使用之纯文本文件的读取和写入（五）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-10T14:56:13+08:00">
+                2017-02-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/02/10/java-io的使用之纯文本文件的读取和写入（五）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/10/java-io的使用之纯文本文件的读取和写入（五）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>胡编乱造，以下就是我的理解。</p>
+<p><img src="http://ohdryj9ow.bkt.clouddn.com/y4.jpg" alt="图1" title="图1"></p>
+<p>纯文本文件读取我们使用的是FileReader,通过查看源码我们发现他的父类是InputStreamReader，他的介绍也是为了方便读取字符文件，还记得我们读取char字符流的时候会用到InputStreamReader，可以联想到，其实FileReader就是对我们字符流读取和写入的封装。也就是说我们可以把<br>字符流的代码换成FileReader就可以了。(如图)</p>
+<p><img src="http://ohdryj9ow.bkt.clouddn.com/y5.jpg" alt="图2" title="图2"></p>
+<p>以下是完整代码，运行发现没有问题，就是这么搞。</p>
+<pre><code>public static void main(String[] args) {
+    try {
+        //文件读取
+        FileReader fr = new FileReader(&quot;java.txt&quot;);
+        BufferedReader br = new BufferedReader(fr);
+
+        FileWriter fw = new FileWriter(&quot;java_new_file.txt&quot;);
+        BufferedWriter bw = new BufferedWriter(fw);
+
+        String input = &quot;&quot;;
+        while ((input = br.readLine()) != null) {
+            bw.write(input + &quot;\n&quot;);
+
+        }
+        bw.flush();
+        bw.close();
+        fw.close();
+        br.close();
+        fr.close();
+        System.out.println(&quot;拷贝完成&quot;);
+    } catch (FileNotFoundException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="杨涛">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://oif1jvh5f.bkt.clouddn.com/nkplxvq2rntpng.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="我啥时候可以手撕鬼子">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="我啥时候可以手撕鬼子" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/" itemprop="url">
+                  java io的使用之带缓冲的字符流的读取和写入（四）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-10T14:38:27+08:00">
+                2017-02-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>胡编乱造，以下就是我的理解，看注释</p>
+<pre><code>public static void main(String[] args) {
+    try {
+        File file = new File(&quot;java.txt&quot;);
+        FileInputStream fis = new FileInputStream(file);
+        InputStreamReader isr = new InputStreamReader(fis, &quot;UTF-8&quot;);
+
+        File new_file = new File(&quot;java_new_buffer.txt&quot;);
+        FileOutputStream fos = new FileOutputStream(new_file);
+        OutputStreamWriter osw = new OutputStreamWriter(fos, &quot;UTF-8&quot;);
+
+        //将字符流读取对象转换成带缓冲的读取对象
+        BufferedReader br = new BufferedReader(isr);
+        // 无换行符的写入，每回都是读取一行
+        BufferedWriter bw = new BufferedWriter(osw);
+        // 带有换行符的打印
+        //PrintWriter pw = new PrintWriter(osw);
+
+        //readLine()的返回结果是一个String,当返回null的时候说明读取完成
+        String input = &quot;&quot;;
+        while ((input = br.readLine()) != null) {
+        //pw.println(input);
+            bw.write(input);
+        }
+
+        //pw.flush();
+        bw.close();
+        br.close();
+        osw.close();
+        fos.close();
+        isr.close();
+        fis.close();
+
+        System.out.println(&quot;拷贝完成&quot;);
+    } catch (FileNotFoundException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } catch (UnsupportedEncodingException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/02/10/java-io的使用之字符流的读取和写入（三）/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="杨涛">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://oif1jvh5f.bkt.clouddn.com/nkplxvq2rntpng.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="我啥时候可以手撕鬼子">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="我啥时候可以手撕鬼子" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/10/java-io的使用之字符流的读取和写入（三）/" itemprop="url">
+                  java io的使用之字符流的读取和写入（三）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-10T11:36:55+08:00">
+                2017-02-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/02/10/java-io的使用之字符流的读取和写入（三）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/10/java-io的使用之字符流的读取和写入（三）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>胡编乱造，以下就是我的理解，看注释</p>
+<pre><code>public static void main(String[] args) {
+    try {
+        // 读取文件对象
+        File file = new File(&quot;java.txt&quot;);
+        // 字节流读取
+        FileInputStream fis = new FileInputStream(file);
+        // 将字节流转换成字符流对象，编码格式默认为GBK，修改为UTF-8
+        InputStreamReader isr = new InputStreamReader(fis, &quot;UTF-8&quot;);
+
+        // 写入文件对象
+        File new_file = new File(&quot;java_new.txt&quot;);
+        // 字节流写入
+        FileOutputStream fos = new FileOutputStream(new_file);
+        // 将字节流转换成字符流对象，编码格式默认为GBK，修改为UTF-8
+        OutputStreamWriter osw = new OutputStreamWriter(fos, &quot;UTF-8&quot;);
+
+        // 字符流的读取，我们当然要用字符数组来存储了，同样的字符数组的大小也是因文件大小而定，多次调试，来选择合适的大小可以提高读取和写入效率
+        char[] input = new char[100];
+        int l = 0;
+        //此处用while的意思是因为我们要读取的文件太大，而每回的数组存储有限，所以需要用while循环来多次读取。我们可以把鼠标放到read()的方法上看到他的返回值是一个int，然后后边介绍说，如果读取返回为-1的时候说明读取完成，根据这个我们可以写出下边的代码
+        while ((l = isr.read(input)) != -1) {
+            //我们为什么要用这个构造呢，因为我们并不清楚要读的字符到底有多少，而每回读取的字符数量又是固定的，为了避免浪费不必要的内存，我们采用以下构造。
+            //参数含义1字符数组       2开始写入字符的偏移量      3写入的字符长度
+            osw.write(input, 0, l);
+        }
+
+        //关闭流，先打开后关闭，后打卡先关闭
+        osw.close();
+        fos.close();
+        isr.close();
+        fos.close();
+
+        System.out.println(&quot;拷贝完成&quot;);
+    } catch (FileNotFoundException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } catch (UnsupportedEncodingException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/02/09/java-io流的使用之字节流读写数据（一）/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="杨涛">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://oif1jvh5f.bkt.clouddn.com/nkplxvq2rntpng.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="我啥时候可以手撕鬼子">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="我啥时候可以手撕鬼子" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/09/java-io流的使用之字节流读写数据（一）/" itemprop="url">
+                  java io流的使用之字节流读写数据（一）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-09T18:10:34+08:00">
+                2017-02-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/02/09/java-io流的使用之字节流读写数据（一）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/java-io流的使用之字节流读写数据（一）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>摘自网络：IO也写作“I/O”，可理解为In和Out，即输入与输出，IO体系的基本功能就是：读和写。字符、字节与编码，字节流可以处理所有类型的数据，如图片、文字、视频等。在读取时，读到一个字节就返回一个字节。字符流仅能够处理纯文本数据，如txt文本等。</p>
+          <!--noindex-->
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/02/09/java-io流的使用之字节流读写数据（一）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/01/05/springMVC常用注解/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -745,7 +1655,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -753,7 +1663,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -762,7 +1672,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
