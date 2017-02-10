@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="带缓冲的字符流的读取和写入," />
+  <meta name="keywords" content="BufferedInputStream," />
 
 
 
@@ -86,16 +86,18 @@
 
 
 
-<meta name="description" content="胡编乱造，以下就是我的理解，看注释">
+<meta name="description" content="BufferedInputStream和BufferedOutputStream主要针对类型比较大的文件读取和写入。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java io的使用之带缓冲的字符流的读取和写入（四）">
-<meta property="og:url" content="http://workertao.coding.me/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/index.html">
+<meta property="og:title" content="java io流的使用之带缓冲区字节流读写数据（二）">
+<meta property="og:url" content="http://workertao.coding.me/2017/02/09/java-io流的使用之带缓冲区字节流读写数据（二）/index.html">
 <meta property="og:site_name" content="我啥时候可以手撕鬼子">
-<meta property="og:description" content="胡编乱造，以下就是我的理解，看注释">
-<meta property="og:updated_time" content="2017-02-10T10:22:09.698Z">
+<meta property="og:description" content="BufferedInputStream和BufferedOutputStream主要针对类型比较大的文件读取和写入。">
+<meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y3.png">
+<meta property="og:updated_time" content="2017-02-10T10:25:26.362Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java io的使用之带缓冲的字符流的读取和写入（四）">
-<meta name="twitter:description" content="胡编乱造，以下就是我的理解，看注释">
+<meta name="twitter:title" content="java io流的使用之带缓冲区字节流读写数据（二）">
+<meta name="twitter:description" content="BufferedInputStream和BufferedOutputStream主要针对类型比较大的文件读取和写入。">
+<meta name="twitter:image" content="http://ohdryj9ow.bkt.clouddn.com/y3.png">
 
 
 
@@ -123,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://workertao.coding.me/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/"/>
+  <link rel="canonical" href="http://workertao.coding.me/2017/02/09/java-io流的使用之带缓冲区字节流读写数据（二）/"/>
 
 
 
 
 
-  <title> java io的使用之带缓冲的字符流的读取和写入（四） | 我啥时候可以手撕鬼子 </title>
+  <title> java io流的使用之带缓冲区字节流读写数据（二） | 我啥时候可以手撕鬼子 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -270,7 +272,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/">
+  <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/02/09/java-io流的使用之带缓冲区字节流读写数据（二）/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="杨涛">
@@ -294,7 +296,7 @@
             
             
               
-                java io的使用之带缓冲的字符流的读取和写入（四）
+                java io流的使用之带缓冲区字节流读写数据（二）
               
             
           </h1>
@@ -307,8 +309,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-10T14:38:27+08:00">
-                2017-02-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-09T18:57:07+08:00">
+                2017-02-09
               </time>
             
 
@@ -341,8 +343,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/" itemprop="commentCount"></span>
+                <a href="/2017/02/09/java-io流的使用之带缓冲区字节流读写数据（二）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/java-io流的使用之带缓冲区字节流读写数据（二）/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -368,45 +370,64 @@
       
 
       
-        <p>胡编乱造，以下就是我的理解，看注释</p>
+        <p>BufferedInputStream和BufferedOutputStream主要针对类型比较大的文件读取和写入。<br><img src="http://ohdryj9ow.bkt.clouddn.com/y3.png" alt="图1" title="图1"></p>
 <a id="more"></a>
+<p>如上图BufferedInputStream和BufferedOutputStream的构造参数有两个，第一个传入我们的文件读取/写入流，第二个传入我们自定义的缓冲区的大小，这个大小将会影响我们的读取/写入效率，我们需要针对文件内容大小多次调试来获取适合我们的缓冲区大小。<br>本来写了一个读取.txt文件的demo【↓↓↓↓↓↓下边代码】，但是因为都是文字，所以读取效率相对来说还是挺快的，无法体现带有缓冲区和没有缓冲区的读取区别，所以网上找来一个比较大的.MP4的文件来读取和写入。</p>
 <pre><code>public static void main(String[] args) {
     try {
-        File file = new File(&quot;java.txt&quot;);
-        FileInputStream fis = new FileInputStream(file);
-        InputStreamReader isr = new InputStreamReader(fis, &quot;UTF-8&quot;);
-
-        File new_file = new File(&quot;java_new_buffer.txt&quot;);
-        FileOutputStream fos = new FileOutputStream(new_file);
-        OutputStreamWriter osw = new OutputStreamWriter(fos, &quot;UTF-8&quot;);
-
-        //将字符流读取对象转换成带缓冲的读取对象
-        BufferedReader br = new BufferedReader(isr);
-        // 无换行符的写入，每回都是读取一行
-        BufferedWriter bw = new BufferedWriter(osw);
-        // 带有换行符的打印
-        //PrintWriter pw = new PrintWriter(osw);
-
-        //readLine()的返回结果是一个String,当返回null的时候说明读取完成
-        String input = &quot;&quot;;
-        while ((input = br.readLine()) != null) {
-        //pw.println(input);
-            bw.write(input);
+        FileInputStream fis = new FileInputStream(&quot;java_new.txt&quot;);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        byte[] b = new byte[100];
+        StringBuffer sb = new StringBuffer();
+        while (bis.read(b) != -1) {
+            sb.append(new String(b, &quot;UTF-8&quot;));
         }
 
-        //pw.flush();
-        bw.close();
-        br.close();
-        osw.close();
-        fos.close();
-        isr.close();
+        bis.close();
         fis.close();
-
-        System.out.println(&quot;拷贝完成&quot;);
+        System.out.println(sb.toString());
     } catch (FileNotFoundException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
-    } catch (UnsupportedEncodingException e) {
+    } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+}
+</code></pre><h1 id="带缓冲区字节流的读取和写入，实现copy的功能"><a href="#带缓冲区字节流的读取和写入，实现copy的功能" class="headerlink" title="带缓冲区字节流的读取和写入，实现copy的功能"></a>带缓冲区字节流的读取和写入，实现copy的功能</h1><p>胡编乱造，以下就是我的理解，看注释</p>
+<pre><code>public static void main(String[] args) {
+    try {
+        // 读取字节流
+        FileInputStream fis = new FileInputStream(&quot;aoo.mp4&quot;);
+        // 缓冲区读取字节流，缓冲区的大小因文件大小而定
+        BufferedInputStream bis = new BufferedInputStream(fis,100000);
+
+        // 写入字节流
+        FileOutputStream fos = new FileOutputStream(&quot;aoo_new.mp4&quot;);
+        // 缓冲区写入字节流，缓冲区的大小因文件大小而定
+        BufferedOutputStream bos = new BufferedOutputStream(fos,100000);
+        //字节数组的大小也因文件大小而定，多次调试获取最合适的大小
+        byte[] input = new byte[10000];
+        //用来记录读取文件的次数
+        int count = 0;
+        //记录开始读取文件的时间
+        long a = System.currentTimeMillis();
+        //此处用while的意思是因为我们要读取的文件太大，而每回的数组存储有限，所以需要用while循环来多次读取。我们可以把鼠标放到read()的方法上看到他的返回值是一个int，然后后边介绍说，如果读取返回为-1的时候说明读取完成，根据这个我们可以写出下边的代码
+        while (bis.read(input) != -1) {
+            bos.write(input);
+            count++;
+        }
+        //记录完成读取文件的时间
+        long b = System.currentTimeMillis() - a;
+
+        //此处的流对象比较多，要记住，先创建的后关闭，后创建的先关闭。
+        bos.close();
+        fos.close();
+        bis.close();
+        fis.close();
+        System.out.println(&quot;耗时：&quot; + b + &quot;ms&quot;);
+        System.out.println(&quot;读取次数：&quot; + count);
+    } catch (FileNotFoundException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
     } catch (IOException e) {
@@ -453,7 +474,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/带缓冲的字符流的读取和写入/" rel="tag"># 带缓冲的字符流的读取和写入</a>
+            <a href="/tags/BufferedInputStream/" rel="tag"># BufferedInputStream</a>
           
         </div>
       
@@ -462,8 +483,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/10/java-io的使用之字符流的读取和写入（三）/" rel="next" title="java io的使用之字符流的读取和写入（三）">
-                <i class="fa fa-chevron-left"></i> java io的使用之字符流的读取和写入（三）
+              <a href="/2017/02/09/java-io流的使用之字节流读写数据（一）/" rel="next" title="java io流的使用之字节流读写数据（一）">
+                <i class="fa fa-chevron-left"></i> java io流的使用之字节流读写数据（一）
               </a>
             
           </div>
@@ -472,8 +493,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/02/10/java-io的使用之纯文本文件的读取和写入（五）/" rel="prev" title="java io的使用之纯文本文件的读取和写入（五）">
-                java io的使用之纯文本文件的读取和写入（五） <i class="fa fa-chevron-right"></i>
+              <a href="/2017/02/10/java-io的使用之字符流的读取和写入（三）/" rel="prev" title="java io的使用之字符流的读取和写入（三）">
+                java io的使用之字符流的读取和写入（三） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -489,10 +510,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/"
-     data-title="java io的使用之带缓冲的字符流的读取和写入（四）"
+        <div class="ds-share flat" data-thread-key="2017/02/09/java-io流的使用之带缓冲区字节流读写数据（二）/"
+     data-title="java io流的使用之带缓冲区字节流读写数据（二）"
      data-content=""
-     data-url="http://workertao.coding.me/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/">
+     data-url="http://workertao.coding.me/2017/02/09/java-io流的使用之带缓冲区字节流读写数据（二）/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -519,8 +540,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/"
-           data-title="java io的使用之带缓冲的字符流的读取和写入（四）" data-url="http://workertao.coding.me/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/">
+      <div class="ds-thread" data-thread-key="2017/02/09/java-io流的使用之带缓冲区字节流读写数据（二）/"
+           data-title="java io流的使用之带缓冲区字节流读写数据（二）" data-url="http://workertao.coding.me/2017/02/09/java-io流的使用之带缓冲区字节流读写数据（二）/">
       </div>
     
   </div>
@@ -544,8 +565,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oif1jvh5f.bkt.clouddn.com/nkplxvq2rntpng.png"
@@ -638,6 +668,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#带缓冲区字节流的读取和写入，实现copy的功能"><span class="nav-number">1.</span> <span class="nav-text">带缓冲区字节流的读取和写入，实现copy的功能</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
