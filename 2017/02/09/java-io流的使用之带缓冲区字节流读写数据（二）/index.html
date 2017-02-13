@@ -86,17 +86,20 @@
 
 
 
-<meta name="description" content="BufferedInputStream和BufferedOutputStream主要针对类型比较大的文件读取和写入。">
+<meta name="description" content="胡编乱造
+BufferedInputStream和BufferedOutputStream主要针对类型比较大的文件读取和写入。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java io流的使用之带缓冲区字节流读写数据（二）">
 <meta property="og:url" content="http://workertao.coding.me/2017/02/09/java-io流的使用之带缓冲区字节流读写数据（二）/index.html">
 <meta property="og:site_name" content="我啥时候可以手撕鬼子">
-<meta property="og:description" content="BufferedInputStream和BufferedOutputStream主要针对类型比较大的文件读取和写入。">
+<meta property="og:description" content="胡编乱造
+BufferedInputStream和BufferedOutputStream主要针对类型比较大的文件读取和写入。">
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y3.png">
-<meta property="og:updated_time" content="2017-02-10T10:25:26.362Z">
+<meta property="og:updated_time" content="2017-02-13T07:12:18.399Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java io流的使用之带缓冲区字节流读写数据（二）">
-<meta name="twitter:description" content="BufferedInputStream和BufferedOutputStream主要针对类型比较大的文件读取和写入。">
+<meta name="twitter:description" content="胡编乱造
+BufferedInputStream和BufferedOutputStream主要针对类型比较大的文件读取和写入。">
 <meta name="twitter:image" content="http://ohdryj9ow.bkt.clouddn.com/y3.png">
 
 
@@ -370,7 +373,8 @@
       
 
       
-        <p>BufferedInputStream和BufferedOutputStream主要针对类型比较大的文件读取和写入。<br><img src="http://ohdryj9ow.bkt.clouddn.com/y3.png" alt="图1" title="图1"></p>
+        <p>胡编乱造</p>
+<p>BufferedInputStream和BufferedOutputStream主要针对类型比较大的文件读取和写入。<br><img src="http://ohdryj9ow.bkt.clouddn.com/y3.png" alt="图1" title="图1"></p>
 <a id="more"></a>
 <p>如上图BufferedInputStream和BufferedOutputStream的构造参数有两个，第一个传入我们的文件读取/写入流，第二个传入我们自定义的缓冲区的大小，这个大小将会影响我们的读取/写入效率，我们需要针对文件内容大小多次调试来获取适合我们的缓冲区大小。<br>本来写了一个读取.txt文件的demo【↓↓↓↓↓↓下边代码】，但是因为都是文字，所以读取效率相对来说还是挺快的，无法体现带有缓冲区和没有缓冲区的读取区别，所以网上找来一个比较大的.MP4的文件来读取和写入。</p>
 <pre><code>public static void main(String[] args) {
