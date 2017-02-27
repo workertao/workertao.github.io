@@ -102,7 +102,7 @@ RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下�
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y13.png">
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y14.png">
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y15.png">
-<meta property="og:updated_time" content="2017-02-13T07:11:56.454Z">
+<meta property="og:updated_time" content="2017-02-27T13:50:01.345Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java io的使用之RandomAccessFile（六）">
 <meta name="twitter:description" content="胡编乱造
@@ -437,9 +437,9 @@ public static void main(String[] args) {
 <p><img src="http://ohdryj9ow.bkt.clouddn.com/y12.png" alt="图3" title="图3"></p>
 <p>以上是写入的内容</p>
 <p><img src="http://ohdryj9ow.bkt.clouddn.com/y13.png" alt="图4" title="图4"></p>
-<p>以上是文件的大小，可以看到413个字节，细细想想我们就会知道，我们定义的每个区间大小为100个字节，如下定义↓↓↓</p>
+<p>以上是文件的大小，可以看到414个字节，细细想想我们就会知道，我们定义的每个区间大小为100个字节，如下定义↓↓↓</p>
 <pre><code>int L = 100;
-</code></pre><p>也就是说我们一共new了5个区间，在写入数据的时候，即使填不满整个区间，而还有后续区间的时候，即使填不满，这些空间也是会为当前区间保留的。而当到了第五个区间的时候，没有后续的操作区间，他只有13个字节，写入就等于写完了。所以文件大小就是413了。</p>
+</code></pre><p>也就是说我们一共new了5个区间，在写入数据的时候，即使填不满整个区间，而还有后续区间的时候，即使填不满，这些空间也是会为当前区间保留的。而当到了第五个区间的时候，没有后续的操作区间，他只有14个字节，写入就等于写完了。所以文件大小就是414了。</p>
 <h1 id="RandomAccessFile读取某一区间流"><a href="#RandomAccessFile读取某一区间流" class="headerlink" title="RandomAccessFile读取某一区间流"></a>RandomAccessFile读取某一区间流</h1><pre><code>try {
     RandomAccessFile raf = new RandomAccessFile(file, &quot;r&quot;);
     raf.seek(300);
