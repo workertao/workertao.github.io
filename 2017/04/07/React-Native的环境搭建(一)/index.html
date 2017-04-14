@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="字符流的读取和写入," />
+  <meta name="keywords" content="react-native," />
 
 
 
@@ -86,21 +86,38 @@
 
 
 
-<meta name="description" content="文字不够，图片来凑……
-胡编乱造">
+<meta name="description" content="nvm：nodeJs版本管理工具,管理nodejs版本和npm版本
+nodeJs： reactNative开发过程中所需要的代码库。
+npm：是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：
+
+允许用户从NPM服务器下载别人编写的第三方包到本地使用。
+允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。
+允许用户将自己编写的包或">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java io的使用之字符流的读取和写入（三）">
-<meta property="og:url" content="http://workertao.coding.me/2017/02/10/java-io的使用之字符流的读取和写入（三）/index.html">
+<meta property="og:title" content="React-Native的环境搭建(一)">
+<meta property="og:url" content="http://workertao.coding.me/2017/04/07/React-Native的环境搭建(一)/index.html">
 <meta property="og:site_name" content="我啥时候可以手撕鬼子">
-<meta property="og:description" content="文字不够，图片来凑……
-胡编乱造">
-<meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y17.jpg">
-<meta property="og:updated_time" content="2017-02-13T07:11:41.886Z">
+<meta property="og:description" content="nvm：nodeJs版本管理工具,管理nodejs版本和npm版本
+nodeJs： reactNative开发过程中所需要的代码库。
+npm：是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：
+
+允许用户从NPM服务器下载别人编写的第三方包到本地使用。
+允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。
+允许用户将自己编写的包或">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/yt101.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/yt104.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/yt102.png">
+<meta property="og:updated_time" content="2017-04-14T06:24:08.320Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java io的使用之字符流的读取和写入（三）">
-<meta name="twitter:description" content="文字不够，图片来凑……
-胡编乱造">
-<meta name="twitter:image" content="http://ohdryj9ow.bkt.clouddn.com/y17.jpg">
+<meta name="twitter:title" content="React-Native的环境搭建(一)">
+<meta name="twitter:description" content="nvm：nodeJs版本管理工具,管理nodejs版本和npm版本
+nodeJs： reactNative开发过程中所需要的代码库。
+npm：是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：
+
+允许用户从NPM服务器下载别人编写的第三方包到本地使用。
+允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。
+允许用户将自己编写的包或">
+<meta name="twitter:image" content="http://oif1jvh5f.bkt.clouddn.com/yt101.png">
 
 
 
@@ -128,13 +145,13 @@
 
 
 
-  <link rel="canonical" href="http://workertao.coding.me/2017/02/10/java-io的使用之字符流的读取和写入（三）/"/>
+  <link rel="canonical" href="http://workertao.coding.me/2017/04/07/React-Native的环境搭建(一)/"/>
 
 
 
 
 
-  <title> java io的使用之字符流的读取和写入（三） | 我啥时候可以手撕鬼子 </title>
+  <title> React-Native的环境搭建(一) | 我啥时候可以手撕鬼子 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -275,7 +292,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/02/10/java-io的使用之字符流的读取和写入（三）/">
+  <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/04/07/React-Native的环境搭建(一)/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="杨涛">
@@ -299,7 +316,7 @@
             
             
               
-                java io的使用之字符流的读取和写入（三）
+                React-Native的环境搭建(一)
               
             
           </h1>
@@ -312,8 +329,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-10T11:36:55+08:00">
-                2017-02-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-07T17:31:27+08:00">
+                2017-04-07
               </time>
             
 
@@ -331,8 +348,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/react-native/" itemprop="url" rel="index">
+                    <span itemprop="name">react-native</span>
                   </a>
                 </span>
 
@@ -346,8 +363,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/02/10/java-io的使用之字符流的读取和写入（三）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/10/java-io的使用之字符流的读取和写入（三）/" itemprop="commentCount"></span>
+                <a href="/2017/04/07/React-Native的环境搭建(一)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/07/React-Native的环境搭建(一)/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -373,54 +390,30 @@
       
 
       
-        <p>文字不够，图片来凑……</p>
-<p>胡编乱造</p>
-<p><img src="http://ohdryj9ow.bkt.clouddn.com/y17.jpg" alt="图1" title="图1"></p>
-<a id="more"></a>
-<pre><code>public static void main(String[] args) {
-    try {
-        // 读取文件对象
-        File file = new File(&quot;java.txt&quot;);
-        // 字节流读取
-        FileInputStream fis = new FileInputStream(file);
-        // 将字节流转换成字符流对象，编码格式默认为GBK，修改为UTF-8
-        InputStreamReader isr = new InputStreamReader(fis, &quot;UTF-8&quot;);
-
-        // 写入文件对象
-        File new_file = new File(&quot;java_new.txt&quot;);
-        // 字节流写入
-        FileOutputStream fos = new FileOutputStream(new_file);
-        // 将字节流转换成字符流对象，编码格式默认为GBK，修改为UTF-8
-        OutputStreamWriter osw = new OutputStreamWriter(fos, &quot;UTF-8&quot;);
-
-        // 字符流的读取，我们当然要用字符数组来存储了，同样的字符数组的大小也是因文件大小而定，多次调试，来选择合适的大小可以提高读取和写入效率
-        char[] input = new char[100];
-        int l = 0;
-        //此处用while的意思是因为我们要读取的文件太大，而每回的数组存储有限，所以需要用while循环来多次读取。我们可以把鼠标放到read()的方法上看到他的返回值是一个int，然后后边介绍说，如果读取返回为-1的时候说明读取完成，根据这个我们可以写出下边的代码
-        while ((l = isr.read(input)) != -1) {
-            //我们为什么要用这个构造呢，因为我们并不清楚要读的字符到底有多少，而每回读取的字符数量又是固定的，为了避免浪费不必要的内存，我们采用以下构造。
-            //参数含义1字符数组       2开始写入字符的偏移量      3写入的字符长度
-            osw.write(input, 0, l);
-        }
-
-        //关闭流，先打开后关闭，后打卡先关闭
-        osw.close();
-        fos.close();
-        isr.close();
-        fos.close();
-
-        System.out.println(&quot;拷贝完成&quot;);
-    } catch (FileNotFoundException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    } catch (UnsupportedEncodingException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    }
-}
+        <p><strong>nvm：</strong><br>nodeJs版本管理工具,管理nodejs版本和npm版本</p>
+<p><strong>nodeJs：</strong> reactNative开发过程中所需要的代码库。</p>
+<p><strong>npm：</strong>是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：</p>
+<ol>
+<li>允许用户从NPM服务器下载别人编写的第三方包到本地使用。</li>
+<li>允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。</li>
+<li>允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。</li>
+</ol>
+<p>npm同样也可以设置淘宝镜像，让我们在下载大神jar包的时候更快捷。<br>npm config set registry <a href="https://registry.npm.taobao.org" target="_blank" rel="external">https://registry.npm.taobao.org</a></p>
+<h1 id="NVM、NODEJS、NPM的关系"><a href="#NVM、NODEJS、NPM的关系" class="headerlink" title="NVM、NODEJS、NPM的关系"></a>NVM、NODEJS、NPM的关系</h1><ol>
+<li>nvm管理构建nodejs和对应的npm,npm管理对应nodejs的第三方插件</li>
+<li>一个reactNative项目只包含一个nodejs和npm,npm和nodejs是配套关系， 一对一的关系。</li>
+</ol>
+<h1 id="nvm安装"><a href="#nvm安装" class="headerlink" title="nvm安装"></a>nvm安装</h1><p>nvm下载地址：<a href="https://github.com/coreybutler/nvm-windows/releases" target="_blank" rel="external">https://github.com/coreybutler/nvm-windows/releases</a><br><img src="http://oif1jvh5f.bkt.clouddn.com/yt101.png" alt="nvm下载地址"><br>默认安装就好，一般的默认安装路径是在C:\Users\Administrator\AppData\Roaming\nvm<br><img src="http://oif1jvh5f.bkt.clouddn.com/yt104.png" alt="nvm默认安装路径"></p>
+<p>nvm配置淘宝镜像 修改settings.txt,设置淘宝镜像是为了下载noods和npm速度更快。<br><img src="http://oif1jvh5f.bkt.clouddn.com/yt102.png" alt="setting文件设置淘宝镜像"></p>
+<h1 id="noodjs-npm安装"><a href="#noodjs-npm安装" class="headerlink" title="noodjs npm安装"></a>noodjs npm安装</h1><p>在确认nvm安装完成的情况下来安装noodjs和npm，以下操作都需要在电脑终端里完成</p>
+<pre><code>安装：nvm install 6.9.2
+</code></pre><p>本地机器可以安装多个版本的noodjs，安装的时候只需要在后边更改版本号就行了。</p>
+<pre><code>查看已经安装的node列表：nvm list
+</code></pre><p>在查看完本地安装的noodjs版本之后，我们需要选择使用版本</p>
+<pre><code>使用：nvm use 6.9.2
+</code></pre><p>同样，在选择的时候，只要更改版本号就行了。</p>
+<p>npm设置淘宝镜像（下载更快）</p>
+<pre><code>npm config set registry https://registry.npm.taobao.org
 </code></pre>
       
     </div>
@@ -460,7 +453,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/字符流的读取和写入/" rel="tag"># 字符流的读取和写入</a>
+            <a href="/tags/react-native/" rel="tag"># react-native</a>
           
         </div>
       
@@ -469,8 +462,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/09/java-io流的使用之带缓冲区字节流读写数据（二）/" rel="next" title="java io流的使用之带缓冲区字节流读写数据（二）">
-                <i class="fa fa-chevron-left"></i> java io流的使用之带缓冲区字节流读写数据（二）
+              <a href="/2017/03/06/自定义view之画折线图/" rel="next" title="自定义view之画折线图">
+                <i class="fa fa-chevron-left"></i> 自定义view之画折线图
               </a>
             
           </div>
@@ -478,10 +471,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/" rel="prev" title="java io的使用之带缓冲的字符流的读取和写入（四）">
-                java io的使用之带缓冲的字符流的读取和写入（四） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -496,10 +485,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/02/10/java-io的使用之字符流的读取和写入（三）/"
-     data-title="java io的使用之字符流的读取和写入（三）"
+        <div class="ds-share flat" data-thread-key="2017/04/07/React-Native的环境搭建(一)/"
+     data-title="React-Native的环境搭建(一)"
      data-content=""
-     data-url="http://workertao.coding.me/2017/02/10/java-io的使用之字符流的读取和写入（三）/">
+     data-url="http://workertao.coding.me/2017/04/07/React-Native的环境搭建(一)/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -526,8 +515,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/10/java-io的使用之字符流的读取和写入（三）/"
-           data-title="java io的使用之字符流的读取和写入（三）" data-url="http://workertao.coding.me/2017/02/10/java-io的使用之字符流的读取和写入（三）/">
+      <div class="ds-thread" data-thread-key="2017/04/07/React-Native的环境搭建(一)/"
+           data-title="React-Native的环境搭建(一)" data-url="http://workertao.coding.me/2017/04/07/React-Native的环境搭建(一)/">
       </div>
     
   </div>
@@ -551,8 +540,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oif1jvh5f.bkt.clouddn.com/nkplxvq2rntpng.png"
@@ -645,6 +643,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NVM、NODEJS、NPM的关系"><span class="nav-number">1.</span> <span class="nav-text">NVM、NODEJS、NPM的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nvm安装"><span class="nav-number">2.</span> <span class="nav-text">nvm安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#noodjs-npm安装"><span class="nav-number">3.</span> <span class="nav-text">noodjs npm安装</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
