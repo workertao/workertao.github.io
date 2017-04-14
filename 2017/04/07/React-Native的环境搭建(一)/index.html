@@ -95,10 +95,9 @@
 <meta property="og:description" content="文字不够，图片来凑……
 胡编乱造">
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y17.jpg">
-<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/yt101.png">
 <meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/yt104.png">
 <meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/yt102.png">
-<meta property="og:updated_time" content="2017-04-14T10:23:11.600Z">
+<meta property="og:updated_time" content="2017-04-14T11:00:51.115Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React-Native的环境搭建(一)">
 <meta name="twitter:description" content="文字不够，图片来凑……
@@ -380,18 +379,21 @@
 <p>胡编乱造</p>
 <p><img src="http://ohdryj9ow.bkt.clouddn.com/y17.jpg" alt="图1" title="图1"></p>
 <a id="more"></a>
-<p><strong>nvm：</strong>nodeJs版本管理工具,管理nodejs版本和npm版本<br><br><strong>nodeJs：</strong> reactNative开发过程中所需要的代码库。<br><br><strong>npm：</strong>是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：<br></p>
+<p>学习React-Native的第一步先从搭建环境入手。</p>
+<h1 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h1><p><strong>nvm：</strong>nodeJs版本管理工具,管理nodejs版本和npm版本<br><br><strong>nodeJs：</strong> reactNative开发过程中所需要的代码库。<br><br><strong>npm：</strong>是随同NodeJS一起安装的包管理工具，能解决NodeJS代码部署上的很多问题，常见的使用场景有以下几种：<br></p>
 <ol>
 <li>允许用户从NPM服务器下载别人编写的第三方包到本地使用。<br></li>
 <li>允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用。<br></li>
 <li>允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。<br></li>
 </ol>
-<h1 id="NVM、NODEJS、NPM的关系"><a href="#NVM、NODEJS、NPM的关系" class="headerlink" title="NVM、NODEJS、NPM的关系"></a>NVM、NODEJS、NPM的关系</h1><ol>
+<h1 id="了解NVM、NODEJS、NPM的关系"><a href="#了解NVM、NODEJS、NPM的关系" class="headerlink" title="了解NVM、NODEJS、NPM的关系"></a>了解NVM、NODEJS、NPM的关系</h1><ol>
 <li>nvm管理构建nodejs和对应的npm,npm管理对应nodejs的第三方插件</li>
 <li>一个reactNative项目只包含一个nodejs和npm,npm和nodejs是配套关系， 一对一的关系。</li>
 </ol>
-<h1 id="nvm安装"><a href="#nvm安装" class="headerlink" title="nvm安装"></a>nvm安装</h1><p><strong>nvm下载地址：</strong><a href="https://github.com/coreybutler/nvm-windows/releases" target="_blank" rel="external">https://github.com/coreybutler/nvm-windows/releases</a><br><img src="http://oif1jvh5f.bkt.clouddn.com/yt101.png" alt="nvm下载地址"><br><br><br>默认安装就好，一般的默认安装路径是在C:\Users\Administrator\AppData\Roaming\nvm<br><img src="http://oif1jvh5f.bkt.clouddn.com/yt104.png" alt="nvm默认安装路径"></p>
-<p>nvm配置淘宝镜像 修改settings.txt,设置淘宝镜像是为了下载noods和npm速度更快。<br><img src="http://oif1jvh5f.bkt.clouddn.com/yt102.png" alt="setting文件设置淘宝镜像"></p>
+<h1 id="nvm安装"><a href="#nvm安装" class="headerlink" title="nvm安装"></a>nvm安装</h1><p><strong>nvm下载地址：</strong><br><a href="https://github.com/coreybutler/nvm-windows/releases" title="nvm下载地址" target="_blank" rel="external">https://github.com/coreybutler/nvm-windows/releases</a><br><br>一路stup，默认安装就好，一般的默认安装路径是在C:\Users\Administrator\AppData\Roaming\nvm<br><img src="http://oif1jvh5f.bkt.clouddn.com/yt104.png" alt="图3" title="图3"><br>nvm配置淘宝镜像 修改settings.txt,设置淘宝镜像是为了下载noods和npm速度更快。</p>
+<pre><code>node_mirror: http://npm.taobao.org/mirrors/node/ 
+npm_mirror: https://npm.taobao.org/mirrors/npm/
+</code></pre><p><img src="http://oif1jvh5f.bkt.clouddn.com/yt102.png" alt="图4" title="图4"></p>
 <h1 id="noodjs-npm安装"><a href="#noodjs-npm安装" class="headerlink" title="noodjs npm安装"></a>noodjs npm安装</h1><p>在确认nvm安装完成的情况下来安装noodjs和npm，以下操作都需要在电脑终端里完成</p>
 <pre><code>安装：nvm install 6.9.2
 </code></pre><p>本地机器可以安装多个版本的noodjs，安装的时候只需要在后边更改版本号就行了。</p>
@@ -640,7 +642,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NVM、NODEJS、NPM的关系"><span class="nav-number">1.</span> <span class="nav-text">NVM、NODEJS、NPM的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nvm安装"><span class="nav-number">2.</span> <span class="nav-text">nvm安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#noodjs-npm安装"><span class="nav-number">3.</span> <span class="nav-text">noodjs npm安装</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单介绍"><span class="nav-number">1.</span> <span class="nav-text">简单介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#了解NVM、NODEJS、NPM的关系"><span class="nav-number">2.</span> <span class="nav-text">了解NVM、NODEJS、NPM的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nvm安装"><span class="nav-number">3.</span> <span class="nav-text">nvm安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#noodjs-npm安装"><span class="nav-number">4.</span> <span class="nav-text">noodjs npm安装</span></a></li></ol></div>
             
 
           </div>
