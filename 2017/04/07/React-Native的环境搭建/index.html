@@ -97,7 +97,10 @@
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y17.jpg">
 <meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/yt104.png">
 <meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/yt102.png">
-<meta property="og:updated_time" content="2017-04-14T11:21:57.708Z">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/yt201.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/yt202.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/yt203.png">
+<meta property="og:updated_time" content="2017-04-18T01:06:54.092Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React-Native的环境搭建">
 <meta name="twitter:description" content="文字不够，图片来凑……
@@ -403,7 +406,23 @@ npm_mirror: https://npm.taobao.org/mirrors/npm/
 </code></pre><p>同样，在选择的时候，只要更改版本号就行了。</p>
 <p>npm设置淘宝镜像（下载更快）</p>
 <pre><code>npm config set registry https://registry.npm.taobao.org
-</code></pre>
+</code></pre><h1 id="python的安装"><a href="#python的安装" class="headerlink" title="python的安装"></a>python的安装</h1><p>python安装地址：<a href="https://www.python.org/" title="python安装" target="_blank" rel="external">https://www.python.org/</a><br>因为react-native的编程需要python的运行环境，所以我们首先需要安装python。在react-native中文网中也有提到需要Chocolatey来安装python，因为我们并不需要做python开发，所以直接在python的官网地址下载安装就行了。<br><img src="http://oif1jvh5f.bkt.clouddn.com/yt201.png" alt="图1" title="图1"></p>
+<h1 id="python环境变量配置"><a href="#python环境变量配置" class="headerlink" title="python环境变量配置"></a>python环境变量配置</h1><p>在环境变量path中添加python的安装路径，默认安装路径在c盘。<br><img src="http://oif1jvh5f.bkt.clouddn.com/yt202.png" alt="图2" title="图2"></p>
+<h1 id="检测python是否安装成功"><a href="#检测python是否安装成功" class="headerlink" title="检测python是否安装成功"></a>检测python是否安装成功</h1><p><img src="http://oif1jvh5f.bkt.clouddn.com/yt203.png" alt="图3" title="图3"></p>
+<h1 id="react-native的环境安装"><a href="#react-native的环境安装" class="headerlink" title="react-native的环境安装"></a>react-native的环境安装</h1><p>react-native的安装就需要用到我们的npm，直接执行npm命令就行。</p>
+<pre><code>npm install -g react-native-cli
+</code></pre><h1 id="ANDROID-HOME环境变量"><a href="#ANDROID-HOME环境变量" class="headerlink" title="ANDROID_HOME环境变量"></a>ANDROID_HOME环境变量</h1><p>确保ANDROID_HOME环境变量正确地指向了你安装的Android SDK的路径。</p>
+<h1 id="检测react-native是否安装成功"><a href="#检测react-native是否安装成功" class="headerlink" title="检测react-native是否安装成功"></a>检测react-native是否安装成功</h1><p>如何检测react-native是否安装成功呢？最好的方法就是使用了，我们来初始化一个项目。</p>
+<pre><code>react-native init first
+</code></pre><p>这句话的意思是初始一个’first’的项目。初始化完成之后，我们来启动这个项目。</p>
+<pre><code>react-native start
+</code></pre><p>必须要在当前项目路径下启动react-native服务。最后一步就是发不了，我们讲创建好的first项目发布到模拟器或者真机上。</p>
+<pre><code>react-native run-android
+</code></pre><p>这句话的意思是讲react-native项目运行在android系统上。在运行之前呢？我们最好检测一下有哪些android设备，这时候就用我们的adb命令了。</p>
+<pre><code>adb devices
+</code></pre><p>这句话用来检测有哪些设备可以使用。如果报adb不是内部命令的话，是没有配置adb环境变量。</p>
+<h1 id="adb环境变量配置"><a href="#adb环境变量配置" class="headerlink" title="adb环境变量配置"></a>adb环境变量配置</h1><p>找到adb的程序目录，一般都在我们sdk的platform-tools目录下，然后将当前目录的路径拷贝到环境变量path中。</p>
+
       
     </div>
 
@@ -534,7 +553,7 @@ npm_mirror: https://npm.taobao.org/mirrors/npm/
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -626,7 +645,7 @@ npm_mirror: https://npm.taobao.org/mirrors/npm/
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单介绍"><span class="nav-number">1.</span> <span class="nav-text">简单介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#了解NVM、NODEJS、NPM的关系"><span class="nav-number">2.</span> <span class="nav-text">了解NVM、NODEJS、NPM的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nvm安装"><span class="nav-number">3.</span> <span class="nav-text">nvm安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#noodjs-npm安装"><span class="nav-number">4.</span> <span class="nav-text">noodjs npm安装</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单介绍"><span class="nav-number">1.</span> <span class="nav-text">简单介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#了解NVM、NODEJS、NPM的关系"><span class="nav-number">2.</span> <span class="nav-text">了解NVM、NODEJS、NPM的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nvm安装"><span class="nav-number">3.</span> <span class="nav-text">nvm安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#noodjs-npm安装"><span class="nav-number">4.</span> <span class="nav-text">noodjs npm安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python的安装"><span class="nav-number">5.</span> <span class="nav-text">python的安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python环境变量配置"><span class="nav-number">6.</span> <span class="nav-text">python环境变量配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#检测python是否安装成功"><span class="nav-number">7.</span> <span class="nav-text">检测python是否安装成功</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#react-native的环境安装"><span class="nav-number">8.</span> <span class="nav-text">react-native的环境安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ANDROID-HOME环境变量"><span class="nav-number">9.</span> <span class="nav-text">ANDROID_HOME环境变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#检测react-native是否安装成功"><span class="nav-number">10.</span> <span class="nav-text">检测react-native是否安装成功</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#adb环境变量配置"><span class="nav-number">11.</span> <span class="nav-text">adb环境变量配置</span></a></li></ol></div>
             
 
           </div>
