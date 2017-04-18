@@ -95,7 +95,7 @@
 <meta property="og:description" content="文字不够，图片来凑……
 胡编乱造">
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y17.jpg">
-<meta property="og:updated_time" content="2017-04-18T10:06:52.312Z">
+<meta property="og:updated_time" content="2017-04-18T10:09:20.197Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React-Native生命周期">
 <meta name="twitter:description" content="文字不够，图片来凑……
@@ -388,9 +388,16 @@
 <li>不能改变组件的状态</li>
 <li>不能修改DOM的输出</li>
 </ul>
-<h2 id="5-componentDidMount"><a href="#5-componentDidMount" class="headerlink" title="5.componentDidMount"></a>5.componentDidMount</h2><p>真实的DOM被渲染出来后调用，在该方法中可通过this.getDOMNode()访问到真实的DOM元素。此时已可以使用其他类库来操作这个DOM。<br>在服务端中，该方法不会被调用。</p>
-<h2 id="6-componentWillReceiveProps"><a href="#6-componentWillReceiveProps" class="headerlink" title="6.componentWillReceiveProps"></a>6.componentWillReceiveProps</h2><p>组件接收到新的props时调用，并将其作为参数nextProps使用，此时可以更改组件props及state。<br>    componentWillReceiveProps: function(nextProps) {<br>        if (nextProps.bool) {<br>            this.setState({<br>                bool: true<br>            });<br>        }<br>    }</p>
-<h2 id="7-shouldComponentUpdate"><a href="#7-shouldComponentUpdate" class="headerlink" title="7.shouldComponentUpdate"></a>7.shouldComponentUpdate</h2><p>组件是否应当渲染新的props或state，返回false表示跳过后续的生命周期方法，通常不需要使用以避免出现bug。在出现应用的瓶颈时，可通过该方法进行适当的优化。<br>在首次渲染期间或者调用了forceUpdate方法后，该方法不会被调用</p>
+<h2 id="5-componentDidMount"><a href="#5-componentDidMount" class="headerlink" title="5.componentDidMount"></a>5.componentDidMount</h2><p>真实的DOM被渲染出来后调用，在该方法中可通过this.getDOMNode()访问到真实的DOM元素。此时已可以使用其他类库来操作这个DOM。在服务端中，该方法不会被调用。</p>
+<h2 id="6-componentWillReceiveProps"><a href="#6-componentWillReceiveProps" class="headerlink" title="6.componentWillReceiveProps"></a>6.componentWillReceiveProps</h2><p>组件接收到新的props时调用，并将其作为参数nextProps使用，此时可以更改组件props及state。</p>
+<pre><code>componentWillReceiveProps: function(nextProps) {
+    if (nextProps.bool) {
+        this.setState({
+            bool: true
+        });
+    }
+}
+</code></pre><h2 id="7-shouldComponentUpdate"><a href="#7-shouldComponentUpdate" class="headerlink" title="7.shouldComponentUpdate"></a>7.shouldComponentUpdate</h2><p>组件是否应当渲染新的props或state，返回false表示跳过后续的生命周期方法，通常不需要使用以避免出现bug。在出现应用的瓶颈时，可通过该方法进行适当的优化。<br>在首次渲染期间或者调用了forceUpdate方法后，该方法不会被调用</p>
 <h2 id="8-componentWillUpdate"><a href="#8-componentWillUpdate" class="headerlink" title="8.componentWillUpdate"></a>8.componentWillUpdate</h2><p>接收到新的props或者state后，进行渲染之前调用，此时不允许更新props或state。</p>
 <h2 id="9-componentDidUpdate"><a href="#9-componentDidUpdate" class="headerlink" title="9.componentDidUpdate"></a>9.componentDidUpdate</h2><p>完成渲染新的props或者state后调用，此时可以访问到新的DOM元素。</p>
 <h2 id="10-componentWillUnmount"><a href="#10-componentWillUnmount" class="headerlink" title="10.componentWillUnmount"></a>10.componentWillUnmount</h2><p>组件被移除之前被调用，可以用于做一些清理工作，在componentDidMount方法中添加的所有任务都需要在该方法中撤销，比如创建的定时器或添加的事件监听器。</p>
