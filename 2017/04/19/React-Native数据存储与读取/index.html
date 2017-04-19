@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="RandomAccessFile," />
+  <meta name="keywords" content="AsyncStorage," />
 
 
 
@@ -86,29 +86,22 @@
 
 
 
-<meta name="description" content="胡编乱造
-这个东西我也没用过，第一次接触，网上看了看，可以用于多线程的上传和下载，下边是我自己的理解。
-RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下什么意思。Random：随机  Access：访问File：文件随机访问文件，看上去英文是这个意思，然后我们点击查看他的源代码看下他的官方解释，英文水平有限，直接上百度了，看图。">
+<meta name="description" content="AsyncStorageAsyncStorage是一个简单的、异步的、持久化的Key-Value存储系统，它对于App来说是全局性的
+方法setItemtatic getItem(key: string, callback?: ?(error: ?Error, result: ?string) =&amp;gt; void) 
+读取key字段并将结果作为第二个参数传递给callback。如果有任何错误发生">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java io的使用之RandomAccessFile（六）">
-<meta property="og:url" content="http://workertao.coding.me/2017/02/10/java-io的使用之RandomAccessFile（六）/index.html">
+<meta property="og:title" content="React-Native数据存储与读取">
+<meta property="og:url" content="http://workertao.coding.me/2017/04/19/React-Native数据存储与读取/index.html">
 <meta property="og:site_name" content="我啥时候可以手撕鬼子">
-<meta property="og:description" content="胡编乱造
-这个东西我也没用过，第一次接触，网上看了看，可以用于多线程的上传和下载，下边是我自己的理解。
-RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下什么意思。Random：随机  Access：访问File：文件随机访问文件，看上去英文是这个意思，然后我们点击查看他的源代码看下他的官方解释，英文水平有限，直接上百度了，看图。">
-<meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y6.jpg">
-<meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y7.jpg">
-<meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y12.png">
-<meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y13.png">
-<meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y14.png">
-<meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y15.png">
-<meta property="og:updated_time" content="2017-02-27T13:50:01.345Z">
+<meta property="og:description" content="AsyncStorageAsyncStorage是一个简单的、异步的、持久化的Key-Value存储系统，它对于App来说是全局性的
+方法setItemtatic getItem(key: string, callback?: ?(error: ?Error, result: ?string) =&amp;gt; void) 
+读取key字段并将结果作为第二个参数传递给callback。如果有任何错误发生">
+<meta property="og:updated_time" content="2017-04-19T08:26:46.165Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java io的使用之RandomAccessFile（六）">
-<meta name="twitter:description" content="胡编乱造
-这个东西我也没用过，第一次接触，网上看了看，可以用于多线程的上传和下载，下边是我自己的理解。
-RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下什么意思。Random：随机  Access：访问File：文件随机访问文件，看上去英文是这个意思，然后我们点击查看他的源代码看下他的官方解释，英文水平有限，直接上百度了，看图。">
-<meta name="twitter:image" content="http://ohdryj9ow.bkt.clouddn.com/y6.jpg">
+<meta name="twitter:title" content="React-Native数据存储与读取">
+<meta name="twitter:description" content="AsyncStorageAsyncStorage是一个简单的、异步的、持久化的Key-Value存储系统，它对于App来说是全局性的
+方法setItemtatic getItem(key: string, callback?: ?(error: ?Error, result: ?string) =&amp;gt; void) 
+读取key字段并将结果作为第二个参数传递给callback。如果有任何错误发生">
 
 
 
@@ -136,13 +129,13 @@ RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下�
 
 
 
-  <link rel="canonical" href="http://workertao.coding.me/2017/02/10/java-io的使用之RandomAccessFile（六）/"/>
+  <link rel="canonical" href="http://workertao.coding.me/2017/04/19/React-Native数据存储与读取/"/>
 
 
 
 
 
-  <title> java io的使用之RandomAccessFile（六） | 我啥时候可以手撕鬼子 </title>
+  <title> React-Native数据存储与读取 | 我啥时候可以手撕鬼子 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -283,7 +276,7 @@ RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/02/10/java-io的使用之RandomAccessFile（六）/">
+  <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/04/19/React-Native数据存储与读取/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="杨涛">
@@ -307,7 +300,7 @@ RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下�
             
             
               
-                java io的使用之RandomAccessFile（六）
+                React-Native数据存储与读取
               
             
           </h1>
@@ -320,8 +313,8 @@ RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下�
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-10T15:22:12+08:00">
-                2017-02-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-19T15:00:33+08:00">
+                2017-04-19
               </time>
             
 
@@ -339,8 +332,8 @@ RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下�
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/react-native/" itemprop="url" rel="index">
+                    <span itemprop="name">react-native</span>
                   </a>
                 </span>
 
@@ -354,8 +347,8 @@ RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下�
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/02/10/java-io的使用之RandomAccessFile（六）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/10/java-io的使用之RandomAccessFile（六）/" itemprop="commentCount"></span>
+                <a href="/2017/04/19/React-Native数据存储与读取/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/19/React-Native数据存储与读取/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -381,85 +374,116 @@ RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下�
       
 
       
-        <p>胡编乱造</p>
-<p>这个东西我也没用过，第一次接触，网上看了看，可以用于多线程的上传和下载，下边是我自己的理解。</p>
-<p>RandomAccessFile，别慌，当我们看到这个单词的时候，先去看下什么意思。<br>Random：随机  <br>Access：访问<br>File：文件<br>随机访问文件，看上去英文是这个意思，然后我们点击查看他的源代码看下他的官方解释，英文水平有限，直接上百度了，看图。</p>
-<a id="more"></a>
-<p><img src="http://ohdryj9ow.bkt.clouddn.com/y6.jpg" alt="图1" title="图1"></p>
-<p>左侧是官方的代码注释，右侧为翻译结果，大概意思是说我们可以自定义访问文件的某一区间，或者修改某一区间的内容。看图↓↓↓↓↓</p>
-<p><img src="http://ohdryj9ow.bkt.clouddn.com/y7.jpg" alt="图2" title="图2"></p>
-<p>这条虚线代表着一个文件，我们将他分成5个区间来读取/写入。<br>首先我们需要一个线程来执行写入，创建一个类继承Thread，实现构造函数，重写run方法。</p>
-<h1 id="RandomAccessFile写入某一区间流"><a href="#RandomAccessFile写入某一区间流" class="headerlink" title="RandomAccessFile写入某一区间流"></a>RandomAccessFile写入某一区间流</h1><pre><code>public class WriteFile extends Thread {
-//读取/写入的文件
-File file;
-//读取/写入的区间
-int block;
-//每个区间的长度，这个区间因文件大小而定，尽量避免浪费不必要的空间
-int L = 100;
+        <h1 id="AsyncStorage"><a href="#AsyncStorage" class="headerlink" title="AsyncStorage"></a>AsyncStorage</h1><p>AsyncStorage是一个简单的、异步的、持久化的Key-Value存储系统，它对于App来说是全局性的</p>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h2 id="setItem"><a href="#setItem" class="headerlink" title="setItem"></a>setItem</h2><pre><code>tatic getItem(key: string, callback?: ?(error: ?Error, result: ?string) =&gt; void) 
+</code></pre><p>读取key字段并将结果作为第二个参数传递给callback。如果有任何错误发生，则会传递一个Error对象作为第一个参数。返回一个Promise对象。</p>
+<h2 id="getItem"><a href="#getItem" class="headerlink" title="getItem"></a>getItem</h2><pre><code>static setItem(key: string, value: string, callback?: ?(error: ?Error) =&gt; void) 
+</code></pre><p>将key字段的值设置成value，并在完成后调用callback函数。如果有任何错误发生，则会传递一个Error对象作为第一个参数。返回一个Promise对象。</p>
+<h2 id="removeItem"><a href="#removeItem" class="headerlink" title="removeItem"></a>removeItem</h2><pre><code>static removeItem(key: string, callback?: ?(error: ?Error) =&gt; void) 
+</code></pre><p>删除一个字段。返回一个Promise对象。</p>
+<h2 id="mergeItem"><a href="#mergeItem" class="headerlink" title="mergeItem"></a>mergeItem</h2><pre><code>static mergeItem(key: string, value: string, callback?: ?(error: ?Error) =&gt; void) 
+</code></pre><p>假设已有的值和新的值都是字符串化的JSON，则将两个值合并。返回一个Promise对象。还没有被所有原生实现都支持。</p>
+<h2 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h2><pre><code>static clear(callback?: ?(error: ?Error) =&gt; void)
+</code></pre><p>删除全部的AsyncStorage数据，不论来自什么库或调用者。通常不应该调用这个函数——使用removeItem或者multiRemove来清除你自己的key。返回一个Promise对象。</p>
+<h1 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h1><pre><code>import React, {Component} from &apos;react&apos;;
+import {
+    StyleSheet,
+    Text,
+    View,
+    Navigator,
+    AsyncStorage,
+    Button,
+} from &apos;react-native&apos;;
+export default class Test extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [
+                {
+                    name: &apos;张三&apos;,
+                    age: 18
+                },
+                {
+                    name: &apos;李四&apos;,
+                    age: 19
+                },
+                {
+                    name: &apos;王五&apos;,
+                    age: 20
+                },
+                {
+                    name: &apos;赵六&apos;,
+                    age: 21
+                },
+            ],
+            saveText: &apos;还未保存数据&apos;,
+            readeText: &apos;还未读取数据&apos;,
+            clearText: &apos;还未清空数据&apos;
+        }
+    }
 
-public WriteFile(File file, int block) {
-    this.file = file;
-    this.block = block;
-}
+    /**
+     * 写入
+     */
+    onSave = () =&gt; {
+        AsyncStorage.setItem(&quot;data&quot;, JSON.stringify(this.state.data))
+            .then(value =&gt; {
+                console.log(&quot;保存成功：&quot; + value);
+                this.setState({saveText: &quot;保存成功&quot;});
+            })
+    }
+    /**
+     * 读取
+     */
+    onRead = () =&gt; {
+        AsyncStorage.getItem(&quot;data&quot;)
+            .then(value =&gt; {
+                console.log(&quot;读取数据：&quot; + value);
+                this.setState({readeText: value === null ? &apos;请添加数据&apos; : value});
+            })
+    }
 
-@Override
-public void run() {
-    super.run();
-    try {
-        @SuppressWarnings(&quot;resource&quot;)
-        RandomAccessFile raf = new RandomAccessFile(file, &quot;rw&quot;);
-        raf.seek((block - 1) * L);
-        raf.writeBytes(&quot;this is block&quot; + block);
-        raf.writeBytes(&quot;\n&quot;);
-    } catch (FileNotFoundException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+    /**
+     * 清空
+     * @returns {XML}
+     */
+    onRemoveItem = () =&gt; {
+        AsyncStorage.removeItem(&quot;data&quot;)
+            .then(value =&gt; {
+                console.log(&quot;清空成功：&quot; + value);
+                this.setState({clearText: &apos;清空成功&apos;});
+            })
+    }
+    /**
+     * 清空
+     * @returns {XML}
+     */
+    onClear = () =&gt; {
+        AsyncStorage.clear()
+            .then(() =&gt; {
+                console.log(&quot;清空成功：&quot; + value);
+                this.setState({clearText: &apos;清空成功&apos;});
+            })
+    }
+
+    render() {
+        return &lt;View style={styles.container}&gt;
+            &lt;Button onPress={this.onSave} style={styles.button} title=&apos;保存&apos;&gt;&lt;/Button&gt;
+            &lt;Text style={styles.saveText}&gt;{this.state.saveText}&lt;/Text&gt;
+            &lt;Button onPress={this.onRead} style={styles.button} title=&apos;读取&apos;&gt;&lt;/Button&gt;
+            &lt;Text style={styles.readText}&gt;{this.state.readeText}&lt;/Text&gt;
+            &lt;Button onPress={this.onRemoveItem} style={styles.button} title=&apos;清空&apos;&gt;&lt;/Button&gt;
+            &lt;Text style={styles.readText}&gt;{this.state.clearText}&lt;/Text&gt;
+        &lt;/View&gt;
     }
 }
-</code></pre><p>完成以上一套流程之后，我们来看run方法应该要执行什么。创建<br>RandomAccessFile对象，参数第一个为读取/写入的文件名，第二个是当前文件的执行权限，参数值有这么几个（”r”[只读]，”rw”[读写]，”rws”，”rwd”），后俩不知道啥意思，前俩就够用了。<br>seek()方法用来指定我们要读取/写入的区间。writeBytes()用来写入内容，参数为字符串还有好多写入的方法，针对不同的需求采用不同的写入方法就行。写入的线程写好以后，我们要在主方法中运行线程，</p>
-<pre><code>static File file = new File(&quot;test.txt&quot;);
-
-public static void main(String[] args) {
-    if (file.exists()) {
-        file.delete();
-    }
-    new WriteFile(file, 1).start();
-    new WriteFile(file, 2).start();
-    new WriteFile(file, 3).start();
-    new WriteFile(file, 4).start();
-    new WriteFile(file, 5).start();
-    }
-}
-</code></pre><p>同时开启5个线程去写入文件，分别写入到不同的区间，运行查看输出。</p>
-<p><img src="http://ohdryj9ow.bkt.clouddn.com/y12.png" alt="图3" title="图3"></p>
-<p>以上是写入的内容</p>
-<p><img src="http://ohdryj9ow.bkt.clouddn.com/y13.png" alt="图4" title="图4"></p>
-<p>以上是文件的大小，可以看到414个字节，细细想想我们就会知道，我们定义的每个区间大小为100个字节，如下定义↓↓↓</p>
-<pre><code>int L = 100;
-</code></pre><p>也就是说我们一共new了5个区间，在写入数据的时候，即使填不满整个区间，而还有后续区间的时候，即使填不满，这些空间也是会为当前区间保留的。而当到了第五个区间的时候，没有后续的操作区间，他只有14个字节，写入就等于写完了。所以文件大小就是414了。</p>
-<h1 id="RandomAccessFile读取某一区间流"><a href="#RandomAccessFile读取某一区间流" class="headerlink" title="RandomAccessFile读取某一区间流"></a>RandomAccessFile读取某一区间流</h1><pre><code>try {
-    RandomAccessFile raf = new RandomAccessFile(file, &quot;r&quot;);
-    raf.seek(300);
-    byte[] str = new byte[20];
-    raf.read(str);
-    System.out.println(new String(str));
-} catch (FileNotFoundException e) {
-    // TODO Auto-generated catch block
-    e.printStackTrace();
-} catch (IOException e) {
-    // TODO Auto-generated catch block
-    e.printStackTrace();
-}
-</code></pre><p>以上代码用来读取文件内容，可以看到RandomAccessFile()的第二个参数传的事”r”，意味着当前对象只能读，不能写。seek()移动到某一区间，这块参数传的300，也就是说从字节300开始读取。</p>
-<p>执行以上代码查看输出↓↓↓↓↓</p>
-<p><img src="http://ohdryj9ow.bkt.clouddn.com/y14.png" alt="图5" title="图5"></p>
-<p>为什么这块输出的事this is block4呢？看下图↓↓↓</p>
-<p><img src="http://ohdryj9ow.bkt.clouddn.com/y15.png" alt="图6" title="图6"></p>
-<p>知道为什么会输出this is block4了吧。机智…</p>
-
+const styles = StyleSheet.create({
+    container: {flex: 1, flexDirection: &apos;column&apos;},
+    button: {width: 100, height: 80},
+    saveText: {fontSize: 18, color: &apos;#00F&apos;},
+    readText: {fontSize: 18, color: &apos;#F00&apos;}
+})
+</code></pre>
       
     </div>
 
@@ -482,7 +506,7 @@ public static void main(String[] args) {
       
         <div class="post-tags">
           
-            <a href="/tags/RandomAccessFile/" rel="tag"># RandomAccessFile</a>
+            <a href="/tags/AsyncStorage/" rel="tag"># AsyncStorage</a>
           
         </div>
       
@@ -491,8 +515,8 @@ public static void main(String[] args) {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/10/java-io的使用之纯文本文件的读取和写入（五）/" rel="next" title="java io的使用之纯文本文件的读取和写入（五）">
-                <i class="fa fa-chevron-left"></i> java io的使用之纯文本文件的读取和写入（五）
+              <a href="/2017/04/18/React-Native生命周期/" rel="next" title="React-Native生命周期">
+                <i class="fa fa-chevron-left"></i> React-Native生命周期
               </a>
             
           </div>
@@ -500,10 +524,6 @@ public static void main(String[] args) {
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/20/android转java后台之【Mysql安装配置】/" rel="prev" title="android转java后台之【Mysql安装配置】">
-                android转java后台之【Mysql安装配置】 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -518,10 +538,10 @@ public static void main(String[] args) {
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/02/10/java-io的使用之RandomAccessFile（六）/"
-     data-title="java io的使用之RandomAccessFile（六）"
+        <div class="ds-share flat" data-thread-key="2017/04/19/React-Native数据存储与读取/"
+     data-title="React-Native数据存储与读取"
      data-content=""
-     data-url="http://workertao.coding.me/2017/02/10/java-io的使用之RandomAccessFile（六）/">
+     data-url="http://workertao.coding.me/2017/04/19/React-Native数据存储与读取/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -548,8 +568,8 @@ public static void main(String[] args) {
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/10/java-io的使用之RandomAccessFile（六）/"
-           data-title="java io的使用之RandomAccessFile（六）" data-url="http://workertao.coding.me/2017/02/10/java-io的使用之RandomAccessFile（六）/">
+      <div class="ds-thread" data-thread-key="2017/04/19/React-Native数据存储与读取/"
+           data-title="React-Native数据存储与读取" data-url="http://workertao.coding.me/2017/04/19/React-Native数据存储与读取/">
       </div>
     
   </div>
@@ -686,7 +706,7 @@ public static void main(String[] args) {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RandomAccessFile写入某一区间流"><span class="nav-number">1.</span> <span class="nav-text">RandomAccessFile写入某一区间流</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RandomAccessFile读取某一区间流"><span class="nav-number">2.</span> <span class="nav-text">RandomAccessFile读取某一区间流</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#AsyncStorage"><span class="nav-number">1.</span> <span class="nav-text">AsyncStorage</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#setItem"><span class="nav-number">2.1.</span> <span class="nav-text">setItem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getItem"><span class="nav-number">2.2.</span> <span class="nav-text">getItem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#removeItem"><span class="nav-number">2.3.</span> <span class="nav-text">removeItem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mergeItem"><span class="nav-number">2.4.</span> <span class="nav-text">mergeItem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clear"><span class="nav-number">2.5.</span> <span class="nav-text">clear</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码示例"><span class="nav-number">3.</span> <span class="nav-text">代码示例</span></a></li></ol></div>
             
 
           </div>
