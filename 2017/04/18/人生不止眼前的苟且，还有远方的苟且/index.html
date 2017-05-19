@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Navigator," />
+  <meta name="keywords" content="生活篇," />
 
 
 
@@ -86,22 +86,15 @@
 
 
 
-<meta name="description" content="文字不够，图片来凑……
-胡编乱造">
 <meta property="og:type" content="article">
-<meta property="og:title" content="React-Native页面跳转">
-<meta property="og:url" content="http://workertao.coding.me/2017/04/18/React-Native页面跳转/index.html">
+<meta property="og:title" content="人生不止眼前的苟且，还有远方的苟且">
+<meta property="og:url" content="http://workertao.coding.me/2017/04/18/人生不止眼前的苟且，还有远方的苟且/index.html">
 <meta property="og:site_name" content="我啥时候可以手撕鬼子">
-<meta property="og:description" content="文字不够，图片来凑……
-胡编乱造">
-<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/yt204.png">
-<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/yt206.png">
-<meta property="og:updated_time" content="2017-04-18T04:59:35.589Z">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/timg.jpg">
+<meta property="og:updated_time" content="2017-05-19T09:55:41.548Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="React-Native页面跳转">
-<meta name="twitter:description" content="文字不够，图片来凑……
-胡编乱造">
-<meta name="twitter:image" content="http://oif1jvh5f.bkt.clouddn.com/yt204.png">
+<meta name="twitter:title" content="人生不止眼前的苟且，还有远方的苟且">
+<meta name="twitter:image" content="http://oif1jvh5f.bkt.clouddn.com/timg.jpg">
 
 
 
@@ -129,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://workertao.coding.me/2017/04/18/React-Native页面跳转/"/>
+  <link rel="canonical" href="http://workertao.coding.me/2017/04/18/人生不止眼前的苟且，还有远方的苟且/"/>
 
 
 
 
 
-  <title> React-Native页面跳转 | 我啥时候可以手撕鬼子 </title>
+  <title> 人生不止眼前的苟且，还有远方的苟且 | 我啥时候可以手撕鬼子 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -276,7 +269,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/04/18/React-Native页面跳转/">
+  <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/04/18/人生不止眼前的苟且，还有远方的苟且/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="杨涛">
@@ -300,7 +293,7 @@
             
             
               
-                React-Native页面跳转
+                人生不止眼前的苟且，还有远方的苟且
               
             
           </h1>
@@ -332,8 +325,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/react-native/" itemprop="url" rel="index">
-                    <span itemprop="name">react-native</span>
+                  <a href="/categories/毒鸡汤/" itemprop="url" rel="index">
+                    <span itemprop="name">毒鸡汤</span>
                   </a>
                 </span>
 
@@ -347,8 +340,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/04/18/React-Native页面跳转/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/18/React-Native页面跳转/" itemprop="commentCount"></span>
+                <a href="/2017/04/18/人生不止眼前的苟且，还有远方的苟且/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/18/人生不止眼前的苟且，还有远方的苟且/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -374,163 +367,112 @@
       
 
       
-        <p>文字不够，图片来凑……</p>
-<p>胡编乱造</p>
-<p><img src="http://oif1jvh5f.bkt.clouddn.com/yt204.png" alt="图1" title="图1"></p>
+        <p><img src="http://oif1jvh5f.bkt.clouddn.com/timg.jpg" alt="图1" title="图1"></p>
 <a id="more"></a>
-<p>android之间的页面跳转和传参用的是intent，页面存在任务堆栈中，最先添加的在最底层，最后添加的在最上层。好在这个思想不变。react-native的页面跳转也需要这样的一个intent。在react-native中文网中有介绍这样一个组件Navigator(即上图)。给我的感觉有点类似于android中的任务堆栈,react-native把android中的任务堆栈给实例成了一个组件(即Navigator)。react-native中的页面添加和删除，也都是直接调用它来操作的。</p>
-<h2 id="Navigator"><a href="#Navigator" class="headerlink" title="Navigator"></a>Navigator</h2><p>常用属性介绍：</p>
-<ol>
-<li>initialRoute：声明需要跳转的页面，可进行传参，传参格式以键值对的形式传递。</li>
-<li>renderScene：renderScene需要指定一个函数来渲染页面，函数会被传入route和navigator对象，返回一个需要跳转到的页面。renderScene类似于startActivity，会传入intent，这里传入的route。我们需要将需要将传递的参数和navigator以属性的形式传递到下一个页面。</li>
-<li>configureScene：设置页面跳转的动画，官方有提供以下几个。</li>
-</ol>
-<ul>
-<li>Navigator.SceneConfigs.PushFromRight (默认)</li>
-<li>Navigator.SceneConfigs.FloatFromRight</li>
-<li>Navigator.SceneConfigs.FloatFromLeft</li>
-<li>Navigator.SceneConfigs.FloatFromBottom</li>
-<li>Navigator.SceneConfigs.FloatFromBottomAndroid</li>
-<li>Navigator.SceneConfigs.FadeAndroid</li>
-<li>Navigator.SceneConfigs.HorizontalSwipeJump</li>
-<li>Navigator.SceneConfigs.HorizontalSwipeJumpFromRight</li>
-<li>Navigator.SceneConfigs.VerticalUpSwipeJump</li>
-<li>Navigator.SceneConfigs.VerticalDownSwipeJump</li>
-</ul>
-<h2 id="项目实例"><a href="#项目实例" class="headerlink" title="项目实例"></a>项目实例</h2><p><img src="http://oif1jvh5f.bkt.clouddn.com/yt206.png" alt="图2" title="图2"></p>
-<h2 id="setup-js"><a href="#setup-js" class="headerlink" title="setup.js"></a>setup.js</h2><pre><code>import React from &apos;react&apos;
-import {
-StyleSheet,
-Text,
-Image,
-View,
-Navigator,
-} from &apos;react-native&apos;
-import HomePage from &apos;./HomePage&apos;
-export default function setup() {
-    class Root extends React.Component {
-        renderScene = (route, navigator) =&gt; {
-        //获取要跳转的页面
-        let Traget = route.component;
-        //{...route.params}是将当前对象的所有属性都传递到下个页面。
-        // navigator传递到下个页面为了下个页面能够进行跳转或者回退
-        return &lt;Traget {...route.params} navigator={navigator}/&gt;
-    }
+<p>有时候，毒鸡汤比鸡汤更能让你从现在的困境中走出来。所以壮士，干了这碗毒鸡汤，前路漫漫大不了一死有什么可怕。</p>
+<p>01</p>
+<p>你全力做到的最好，可能还不如别人的随便搞搞。</p>
+<p>02</p>
+<p>失败并不可怕，可怕的是你还相信这句话。</p>
+<p>03</p>
+<p>你以为有钱人很快乐吗，他们的快乐你根本想象不到。</p>
+<p>04</p>
+<p>你们之所以喝鸡汤，是因为肉被别人吃了。</p>
+<p>05</p>
+<p>条条大路通罗马，而有些人就生在罗马。</p>
+<p>06</p>
+<p>别灰心，人生就是这样起起落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落的。</p>
+<p>07</p>
+<p>哇她出轨了，我要骂死她，哇他别绿了，好心疼他啊。心疼心疼自己吧，再心疼人家谁俩一天赚的都比你一年赚的多！</p>
+<p>08</p>
+<p>比一个人吃火锅更寂寞的是，一个人没有钱吃火锅。</p>
+<p>09</p>
+<p>有时候你不努力一下，不知道什么叫绝望。</p>
+<p>10</p>
+<p>为什么要怕鬼，害你的全是人。</p>
+<p>11</p>
+<p>你以为你两关系很好吗？不从别人的嘴巴里听到一些话，你永远不知道朋友怎么评价你。</p>
+<p>12</p>
+<p>只有真正努力过的人才知道，天赋有多重要。</p>
+<p>13</p>
+<p>最怕你一生碌碌无为，还安慰自己平凡可贵。</p>
+<p>14</p>
+<p>巴菲特的传记只会记载他8岁就去参观纽约证交所，但是不会记载他的父亲是国会议员，当时是高盛董事带他参观的；比尔·盖茨的传记只会记载他从哈佛辍学创业，但是不会记载他的母亲是IBM的董事，动用权力为他带来了“第一桶金”。</p>
+<p>15</p>
+<p>当你觉得自己又丑又穷，一无是处时，别绝望，因为至少你的判断还是对的。</p>
+<p>16</p>
+<p>不要看别人表面上一帆风顺，实际上，他们背地里，也是一帆风顺。</p>
+<p>17</p>
+<p>哪有什么选择恐惧症，还不是因为穷。</p>
+<p>18</p>
+<p>你无法叫醒一个不回你消息的人，但是红包能。</p>
+<p>身体篇</p>
+<p>19</p>
+<p>虽然你单身，但是你胖若两人。</p>
+<p>20</p>
+<p>好女孩只得到了好字，而漂亮女孩却得到了所有。</p>
+<p>21</p>
+<p>你只知道人家化妆比你好看，却不知道，她们卸了妆，不仅比你好看，皮肤还吹弹可破。</p>
+<p>22</p>
+<p>微胖真的不是好身材。</p>
+<p>23</p>
+<p>像我这种连名牌都不认识几个的人，有时候连别人在炫富都感觉不到。</p>
+<p>24</p>
+<p>爱笑的女生运气不会太差，那是因为运气差的根本笑不出来。</p>
+<p>25</p>
+<p>善良没用，你得漂亮，还得有钱。</p>
+<p>26</p>
+<p>上帝是公平的，给了你丑的外表，还会给你低的智商，以免让你显得不协调。</p>
+<p>27</p>
+<p>孜孜不倦熬夜，勤勤恳恳护肤。</p>
+<p>28</p>
+<p>长得丑就是病，不然整形医院怎么叫医院？</p>
+<p>29</p>
+<p>学校教学楼厕所放镜子你以为让你整理仪容！？你错了，是为了让你知道，人丑就要多读书。</p>
+<p>30</p>
+<p>别人以为你是高冷，只有自己知道是自卑。</p>
+<p>爱情篇</p>
+<p>31</p>
+<p>你每天熬夜的时候有没有想过，你喜欢的那个人早就已经睡了，而且梦里没有你，醒来也不会爱你。</p>
+<p>32</p>
+<p>不要烦他啦，他还要去哄别的女孩子。</p>
+<p>33</p>
+<p>生活不止眼前的苟且，还有前任的喜帖。</p>
+<p>34</p>
+<p>你听过的情话不都是为上床做铺垫吗？</p>
+<p>35</p>
+<p>你以为赵默笙真的是傻白甜吗，你忘了他跟何以琛考了同一所大学。</p>
+<p>36</p>
+<p>女追男隔层纱，除非那男的本来就对你有好感，不然隔的基本都是铁丝网，还是带电的那种。</p>
+<p>37</p>
+<p>撩你不是因为喜欢你，而是因为看你的样子就知道你很容易睡。</p>
+<p>38</p>
+<p>你永远不知道他在和你聊天的同时，隔着屏幕还在和多少女生聊天。</p>
+<p>39</p>
+<p>等你以后老了，走不动了，我就每天用轮椅推你到广场上去，让你看着我和别的老头跳舞。</p>
+<p>40</p>
+<p>有的人是来爱你的，有的人就是来给你上课的。</p>
+<p>41</p>
+<p>如果一个人秒回了你，说明这个人在玩手机。</p>
+<p>42</p>
+<p>你以为他是不会表达，其实他就是不爱你。</p>
+<p>43</p>
+<p>当我看到大家的男朋友越找越丑，我就知道，大家开始认真了，真的要成家了。</p>
+<p>44</p>
+<p>他喜欢你，但不妨碍他会喜欢别人。</p>
+<p>45</p>
+<p>喜欢一个人一定要去告白，不被拒绝一下，你还真以为自己是小仙女了。</p>
+<p>46</p>
+<p>如果你是异性，你会和现在的自己交往吗？</p>
+<p>47</p>
+<p>从前车马很慢，书信很远，一生只够爱一个人，但是能纳很多妾。</p>
+<p>48</p>
+<p>在你深夜失眠时，人家早就呼呼大睡了，在你孤独时，别人早已有了新欢，在你怀旧时，别人早就将你忘的一干二净了，所以别再因为他继续熬夜了。</p>
+<p>49</p>
+<p>你才二十多岁，没有遇到喜欢的人很正常，往后你会发现，大概是遇不到了。</p>
+<p>50</p>
+<p>现在的人天天手机不离手，要回你消息早就回了，单身没关系，以后单身的日子还长着呢。</p>
 
-    render() {
-        //initialRoute:声明要跳转的页面  params:要传递的参数，参数以键值对的形式传递
-        //renderScene:返回要跳转的页面
-        //configureScene：设置页面跳转的动画
-        return &lt;Navigator
-            initialRoute={{component:HomePage,params:{title:'张三的歌'}}}
-            renderScene={(route,navigator)=&gt;this.renderScene(route,navigator)}
-            configureScene={route=&gt;Navigator.SceneConfigs.FadeAndroid}
-        &gt;
-        &lt;/Navigator&gt;
-        }
-    }
-return &lt;Root/&gt;
-}
-</code></pre><h2 id="HomePage-js"><a href="#HomePage-js" class="headerlink" title="HomePage.js"></a>HomePage.js</h2><pre><code>import React from &apos;react&apos;
-import {
-StyleSheet,
-Text,
-Image,
-View,
-} from &apos;react-native&apos;
-import MyPage from &apos;./MyPage&apos;
-export default class HomePage extends React.Component {
-    goToMyPage = () =&gt; {
-        //添加到任务堆栈中MyPage页面，传递参数title
-        this.props.navigator.push({
-        component: MyPage,
-        params: {title: &apos;我的页面&apos;}
-        })
-    }
-
-    render() {
-        return &lt;View style={styles.container}&gt;
-            &lt;View style={styles.titleStyle}&gt;
-                /* 调用当前对象的属性props来接收传递的参数title*/
-                &lt;Text style={styles.fontStyle}&gt;{this.props.title}&lt;/Text&gt;
-            &lt;/View&gt;
-            &lt;View style={styles.centerStyle}&gt;
-                &lt;Text style={styles.fontStyle} onPress={this.goToMyPage}&gt;{`let&apos;s go MyPage`}&lt;/Text&gt;
-            &lt;/View&gt;
-            &lt;/View&gt;
-        }
-    }
-    const styles = StyleSheet.create({
-        container: {
-        flex: 1,
-            flexDirection: &apos;column&apos;,
-            backgroundColor: &apos;#FFF&apos;,
-        },
-        titleStyle: {
-            flexDirection: &apos;row&apos;,
-            alignSelf: &apos;center&apos;,
-        },
-        centerStyle: {
-            flex: 1,
-            flexDirection: &apos;column&apos;,
-            justifyContent: &apos;center&apos;,
-            alignItems: &apos;center&apos;,
-        },
-        fontStyle: {
-            color: &apos;#F00&apos;,
-            fontSize: 24,
-        }
-    })
-</code></pre><h2 id="MyPage-js"><a href="#MyPage-js" class="headerlink" title="MyPage.js"></a>MyPage.js</h2><pre><code>`import React from &apos;react&apos;
-import {
-StyleSheet,
-Text,
-Image,
-View,
-} from &apos;react-native&apos;
-export default class MyPage extends React.Component {
-doBack = () =&gt; {
-    //将当前页面从任务堆栈中移除
-    this.props.navigator.pop();
-}
-
-render() {
-    return &lt;View style={styles.container}&gt;
-        &lt;View style={styles.titleStyle}&gt;
-            /* 调用当前对象的属性props来接收传递的参数title*/
-            &lt;Text style={styles.fontStyle}&gt;{this.props.title}&lt;/Text&gt;
-        &lt;/View&gt;
-        &lt;View style={styles.centerStyle}&gt;
-            &lt;Text style={styles.fontStyle} onPress={this.doBack}&gt;{`back`}&lt;/Text&gt;
-        &lt;/View&gt;
-
-    &lt;/View&gt;
-}
-}
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: &apos;#FF0&apos;,
-        flexDirection: &apos;column&apos;,
-        justifyContent: &apos;center&apos;,
-           alignItems: &apos;center&apos;,
-    },
-    titleStyle: {
-        flexDirection: &apos;row&apos;,
-        alignSelf: &apos;center&apos;,
-    },
-    centerStyle: {
-        flex: 1,
-        flexDirection: &apos;column&apos;,
-        justifyContent: &apos;center&apos;,
-        alignItems: &apos;center&apos;,
-    },
-    fontStyle: {
-        color: &apos;#F00&apos;,
-        fontSize: 24,
-    }
-})`
-</code></pre>
       
     </div>
 
@@ -553,7 +495,7 @@ const styles = StyleSheet.create({
       
         <div class="post-tags">
           
-            <a href="/tags/Navigator/" rel="tag"># Navigator</a>
+            <a href="/tags/生活篇/" rel="tag"># 生活篇</a>
           
         </div>
       
@@ -562,8 +504,8 @@ const styles = StyleSheet.create({
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/18/人生不止眼前的苟且，还有远方的苟且/" rel="next" title="人生不止眼前的苟且，还有远方的苟且">
-                <i class="fa fa-chevron-left"></i> 人生不止眼前的苟且，还有远方的苟且
+              <a href="/2017/04/07/React-Native的环境搭建/" rel="next" title="React-Native的环境搭建">
+                <i class="fa fa-chevron-left"></i> React-Native的环境搭建
               </a>
             
           </div>
@@ -572,8 +514,8 @@ const styles = StyleSheet.create({
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/18/React-Native生命周期/" rel="prev" title="React-Native生命周期">
-                React-Native生命周期 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/18/React-Native页面跳转/" rel="prev" title="React-Native页面跳转">
+                React-Native页面跳转 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -589,10 +531,10 @@ const styles = StyleSheet.create({
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/04/18/React-Native页面跳转/"
-     data-title="React-Native页面跳转"
+        <div class="ds-share flat" data-thread-key="2017/04/18/人生不止眼前的苟且，还有远方的苟且/"
+     data-title="人生不止眼前的苟且，还有远方的苟且"
      data-content=""
-     data-url="http://workertao.coding.me/2017/04/18/React-Native页面跳转/">
+     data-url="http://workertao.coding.me/2017/04/18/人生不止眼前的苟且，还有远方的苟且/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -619,8 +561,8 @@ const styles = StyleSheet.create({
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/04/18/React-Native页面跳转/"
-           data-title="React-Native页面跳转" data-url="http://workertao.coding.me/2017/04/18/React-Native页面跳转/">
+      <div class="ds-thread" data-thread-key="2017/04/18/人生不止眼前的苟且，还有远方的苟且/"
+           data-title="人生不止眼前的苟且，还有远方的苟且" data-url="http://workertao.coding.me/2017/04/18/人生不止眼前的苟且，还有远方的苟且/">
       </div>
     
   </div>
@@ -644,17 +586,8 @@ const styles = StyleSheet.create({
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oif1jvh5f.bkt.clouddn.com/nkplxvq2rntpng.png"
@@ -747,22 +680,6 @@ const styles = StyleSheet.create({
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Navigator"><span class="nav-number">1.</span> <span class="nav-text">Navigator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目实例"><span class="nav-number">2.</span> <span class="nav-text">项目实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setup-js"><span class="nav-number">3.</span> <span class="nav-text">setup.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HomePage-js"><span class="nav-number">4.</span> <span class="nav-text">HomePage.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyPage-js"><span class="nav-number">5.</span> <span class="nav-text">MyPage.js</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
     </div>
