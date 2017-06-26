@@ -95,7 +95,7 @@
 <meta property="og:description" content="文字不够，图片来凑……
 胡编乱造">
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y17.jpg">
-<meta property="og:updated_time" content="2017-06-26T05:25:04.249Z">
+<meta property="og:updated_time" content="2017-06-26T05:34:05.208Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javapoet和abstractprocessor使用总结">
 <meta name="twitter:description" content="文字不够，图片来凑……
@@ -380,42 +380,21 @@
 <p>最近跟朋友在github上搞了一个Organizations。<br>翻译【Organizations：组织】。起因是一个大牛搞了一个开源项目，一个build之后就自动对被注解的类进行序列化的开源项目。但是呢还有一点缺陷，就是在被注解的实体类也增加了注解的时候，序列化后的类并没有相应的增加。他把这个issuse(缺陷)提给了我。但我对这些东西时相当不熟悉，压根都没听过，都不知道干嘛呢，但出于对自己能力的肯定，决定去研究一下。经过两天的摸索和尝试，也是把这玩意搞定了。</p>
 <p>项目地址：<a href="https://github.com/Scavenges/GeneratorX.git" title="项目开源地址" target="_blank" rel="external">https://github.com/Scavenges/GeneratorX.git</a></p>
 <p>此次就不对这个开源项目做详解了，因为东西有点多，只把核心东西记录一下吧</p>
-<h2 id="修改issuse的时候遇到的问题及如何解决的"><a href="#修改issuse的时候遇到的问题及如何解决的" class="headerlink" title="修改issuse的时候遇到的问题及如何解决的"></a>修改issuse的时候遇到的问题及如何解决的</h2><ol>
-<li>AbstractProcessor是本开源项目的核心类，在build过程中，会执行该类的重写方法。process()是该类的核心方法，这相当于每个处理器的主函数main()。你在这里写你的扫描、评估和处理注解的代码，以及生成Java文件。输入参数RoundEnviroment，可以让你查询出包含特定注解的被注解元素。</li>
-<li>之前在检测类元素的时候，判断是这么写的。<br> if (annotatedElement instanceof TypeElement) </li>
-</ol>
-<p>这么写并不合理，因为所有的元素类型都是Element,所有要避免使用instanceof。配合TypeMirror使用EmentKind或者TypeKind。</p>
+<h2 id="修改issuse的时候遇到的问题及如何解决的"><a href="#修改issuse的时候遇到的问题及如何解决的" class="headerlink" title="修改issuse的时候遇到的问题及如何解决的"></a>修改issuse的时候遇到的问题及如何解决的</h2><p>1、AbstractProcessor是本开源项目的核心类，在build过程中，会执行该类的重写方法。process()是该类的核心方法，这相当于每个处理器的主函数main()。你在这里写你的扫描、评估和处理注解的代码，以及生成Java文件。输入参数RoundEnviroment，可以让你查询出包含特定注解的被注解元素。</p>
+<p>2、之前在检测类元素的时候，判断是这么写的。</p>
+<pre><code>if (annotatedElement instanceof TypeElement) 
+</code></pre><p>这么写并不合理，因为所有的元素类型都是Element,所有要避免使用instanceof。配合TypeMirror使用EmentKind或者TypeKind。</p>
 <pre><code>if (annotatedElement.getKind() == ElementKind.CLASS)
-</code></pre><ol>
-<li><p>我们在遍历获取类文件里边的元素时，首先获取的是构造函数。</p>
-</li>
-<li><p>以下是获取注解的代码，返回一个集合</p>
-<p>  List&lt;? extends AnnotationMirror&gt; annotationMirrors = element.getAnnotationMirrors();</p>
-</li>
-<li><p>以下是获取注解类型的代码</p>
-<p> DeclaredType declaredType = annotationMirrors.get(i).getAnnotationType();</p>
-</li>
-<li><p>以下是获取注解值的代码，返回一个map</p>
-<p> Map&lt;? extends ExecutableElement, ? extends AnnotationValue&gt; map = annotationMirrors.get(i).getElementValues();</p>
-</li>
-<li><p>创建一个新的注解</p>
-<p> //通过全类名返回一个类，此类用于生成注解<br> Class clazz = Class.forName(simpleName);<br> //创建一个新的注解<br> AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(clazz);<br> //for循环遍历集合，用户有可能自定义注解，并且会有多个注解值，看来这块需要遍历保存<br> for (Map.Entry&lt;? extends ExecutableElement, ? extends AnnotationValue&gt; entry : map.entrySet()) {</p>
-<pre><code>//注解key
-String key = entry.getKey().getSimpleName().toString();
-//注解value()返回的是一个集合Collection，通过迭代出下一个的值
-Object value = entry.getValue().getValue();
-//增加注解初始值
-annotationBuilder.addMember(key, &quot;$S&quot;, value);
-//打印信息，在此处遇到一个问题，下边的打印方法貌似会覆盖之前的打印数据。
-messager.printMessage(
-        Diagnostic.Kind.ERROR,
-        String.format(&quot;全类名：&quot; + simpleName + &quot;   注解key：&quot; + key + &quot;   注解值：&quot; + value, this),
-        element);
-</code></pre><p> }<br> //new一个新的注解空间<br> AnnotationSpec annotationSpec = annotationBuilder.build();</p>
-</li>
-<li><p>messager打印的时候遇到一个问题，最后打印的数据貌似会把之前的数据覆盖，导致在for循环的时候，我一直认为数据是不对的，很坑爹。</p>
-</li>
-</ol>
+</code></pre><p>3、我们在遍历获取类文件里边的元素时，首先获取的是构造函数。</p>
+<p>4、以下是获取注解的代码，返回一个集合</p>
+<pre><code>List&lt;? extends AnnotationMirror&gt; annotationMirrors = element.getAnnotationMirrors();
+</code></pre><p>5、以下是获取注解类型的代码</p>
+<pre><code>DeclaredType declaredType = annotationMirrors.get(i).getAnnotationType();
+</code></pre><p>6、以下是获取注解值的代码，返回一个map</p>
+<pre><code>Map&lt;? extends ExecutableElement, ? extends AnnotationValue&gt; map = annotationMirrors.get(i).getElementValues();
+</code></pre><p>7、创建一个新的注解</p>
+<pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//通过全类名返回一个类，此类用于生成注解</span></div><div class="line">Class clazz = Class.forName(simpleName);</div><div class="line"><span class="comment">//创建一个新的注解</span></div><div class="line">AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(clazz);</div><div class="line"><span class="comment">//for循环遍历集合，用户有可能自定义注解，并且会有多个注解值，看来这块需要遍历保存</span></div><div class="line"><span class="keyword">for</span> (Map.Entry&lt;? extends ExecutableElement, ? extends AnnotationValue&gt; entry : map.entrySet()) &#123;</div><div class="line">    <span class="comment">//注解key</span></div><div class="line">    String key = entry.getKey().getSimpleName().toString();</div><div class="line">    <span class="comment">//注解value()返回的是一个集合Collection，通过迭代出下一个的值</span></div><div class="line">    Object value = entry.getValue().getValue();</div><div class="line">    <span class="comment">//增加注解初始值</span></div><div class="line">    annotationBuilder.addMember(key, <span class="string">"$S"</span>, value);</div><div class="line">    <span class="comment">//打印信息，在此处遇到一个问题，下边的打印方法貌似会覆盖之前的打印数据。</span></div><div class="line">    messager.printMessage(</div><div class="line">            Diagnostic.Kind.ERROR,</div><div class="line">            String.format(<span class="string">"全类名："</span> + simpleName + <span class="string">"   注解key："</span> + key + <span class="string">"   注解值："</span> + value, <span class="keyword">this</span>),</div><div class="line">            element);</div><div class="line">&#125;</div><div class="line"><span class="comment">//new一个新的注解空间</span></div><div class="line">AnnotationSpec annotationSpec = annotationBuilder.build();</div></pre></td></tr></table></figure>
+</code></pre><p>8、messager打印的时候遇到一个问题，最后打印的数据貌似会把之前的数据覆盖，导致在for循环的时候，我一直认为数据是不对的，很坑爹。</p>
 <h2 id="javapoet"><a href="#javapoet" class="headerlink" title="javapoet"></a>javapoet</h2><p>他就像是一个代码生成器，我们写入一定的指令（代码），java poet自动写出java源代码。那它都可以写什么东西呢，应该是什么都可以生成，为什么说应该呢，因为并不是所有的东西我都去试过，我试过生成类，构造方法，普通方法，变量，枚举，注解。这些是都可以做到的。</p>
 <p>简单记录一个生成HelloWord的代码，下边的工程会用到。</p>
 <pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">   MethodSpec main = MethodSpec.methodBuilder(<span class="string">"main"</span>) <span class="comment">//main代表方法名</span></div><div class="line">                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)<span class="comment">//Modifier 修饰的关键字</span></div><div class="line">                .addParameter(String[].class, <span class="string">"args"</span>) <span class="comment">//添加string[]类型的名为args的参数</span></div><div class="line">                .addStatement(<span class="string">"$T.out.println($S)"</span>, System.class, <span class="string">"Hello World"</span>)<span class="comment">//添加代码，这里$T和$S后面会讲，这里其实就是添加了System,out.println("Hello World");</span></div><div class="line">                .build();</div><div class="line">        TypeSpec typeSpec = TypeSpec.classBuilder(<span class="string">"HelloWorld"</span>)<span class="comment">//HelloWorld是类名</span></div><div class="line">                .addModifiers(Modifier.PUBLIC)</div><div class="line">                .addMethod(main)  <span class="comment">//在类中添加方法</span></div><div class="line">                .build();</div><div class="line">        JavaFile javaFile = JavaFile.builder(<span class="string">"com.acode.main"</span>, typeSpec)</div><div class="line">                .build();</div><div class="line"><span class="comment">//        javaFile.writeTo(processingEnv.getFiler());</span></div><div class="line"><span class="comment">//        javaFile.writeTo(new File("F:/code/JavaPoet/acode_main/src/main/java/com/acode/main"));</span></div><div class="line"><span class="comment">//        javaFile.writeTo(new File("acode_main/src/main/java/"));</span></div><div class="line">        javaFile.writeTo(<span class="keyword">new</span> File(<span class="string">"F:/code/JavaPoet/acode_main/src/main/java"</span>));</div></pre></td></tr></table></figure>
