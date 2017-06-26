@@ -95,7 +95,7 @@
 <meta property="og:description" content="文字不够，图片来凑……
 胡编乱造">
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y17.jpg">
-<meta property="og:updated_time" content="2017-06-26T03:07:11.340Z">
+<meta property="og:updated_time" content="2017-06-26T05:25:04.249Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javapoet和abstractprocessor使用总结">
 <meta name="twitter:description" content="文字不够，图片来凑……
@@ -380,74 +380,47 @@
 <p>最近跟朋友在github上搞了一个Organizations。<br>翻译【Organizations：组织】。起因是一个大牛搞了一个开源项目，一个build之后就自动对被注解的类进行序列化的开源项目。但是呢还有一点缺陷，就是在被注解的实体类也增加了注解的时候，序列化后的类并没有相应的增加。他把这个issuse(缺陷)提给了我。但我对这些东西时相当不熟悉，压根都没听过，都不知道干嘛呢，但出于对自己能力的肯定，决定去研究一下。经过两天的摸索和尝试，也是把这玩意搞定了。</p>
 <p>项目地址：<a href="https://github.com/Scavenges/GeneratorX.git" title="项目开源地址" target="_blank" rel="external">https://github.com/Scavenges/GeneratorX.git</a></p>
 <p>此次就不对这个开源项目做详解了，因为东西有点多，只把核心东西记录一下吧</p>
-<h2 id="修改issuse的时候遇到的问题及如何解决的"><a href="#修改issuse的时候遇到的问题及如何解决的" class="headerlink" title="修改issuse的时候遇到的问题及如何解决的"></a>修改issuse的时候遇到的问题及如何解决的</h2><p>1：AbstractProcessor是本开源项目的核心类，在build过程中，会执行该类的重写方法。process()是该类的核心方法，这相当于每个处理器的主函数main()。你在这里写你的扫描、评估和处理注解的代码，以及生成Java文件。输入参数RoundEnviroment，可以让你查询出包含特定注解的被注解元素。</p>
-<p>2：之前在检测类元素的时候，判断是这么写的。</p>
-<pre><code>if (annotatedElement instanceof TypeElement) 
-</code></pre><p>这么写并不合理，因为所有的元素类型都是Element,所有要避免使用instanceof。配合TypeMirror使用EmentKind或者TypeKind。</p>
+<h2 id="修改issuse的时候遇到的问题及如何解决的"><a href="#修改issuse的时候遇到的问题及如何解决的" class="headerlink" title="修改issuse的时候遇到的问题及如何解决的"></a>修改issuse的时候遇到的问题及如何解决的</h2><ol>
+<li>AbstractProcessor是本开源项目的核心类，在build过程中，会执行该类的重写方法。process()是该类的核心方法，这相当于每个处理器的主函数main()。你在这里写你的扫描、评估和处理注解的代码，以及生成Java文件。输入参数RoundEnviroment，可以让你查询出包含特定注解的被注解元素。</li>
+<li>之前在检测类元素的时候，判断是这么写的。<br> if (annotatedElement instanceof TypeElement) </li>
+</ol>
+<p>这么写并不合理，因为所有的元素类型都是Element,所有要避免使用instanceof。配合TypeMirror使用EmentKind或者TypeKind。</p>
 <pre><code>if (annotatedElement.getKind() == ElementKind.CLASS)
-</code></pre><p>3:我们在遍历获取类文件里边的元素时，首先获取的是构造函数。</p>
-<p>4：以下是获取注解的代码，返回一个集合</p>
-<pre><code>List&lt;? extends AnnotationMirror&gt; annotationMirrors = element.getAnnotationMirrors();
-</code></pre><p>5：以下是获取注解类型的代码</p>
-<pre><code>DeclaredType declaredType = annotationMirrors.get(i).getAnnotationType();
-</code></pre><p>6：以下是获取注解值的代码，返回一个map</p>
-<pre><code>Map&lt;? extends ExecutableElement, ? extends AnnotationValue&gt; map = annotationMirrors.get(i).getElementValues();
-</code></pre><p>7：创建一个新的注解</p>
-<pre><code>//通过全类名返回一个类，此类用于生成注解
-Class clazz = Class.forName(simpleName);
-//创建一个新的注解
-AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(clazz);
-//for循环遍历集合，用户有可能自定义注解，并且会有多个注解值，看来这块需要遍历保存
-for (Map.Entry&lt;? extends ExecutableElement, ? extends AnnotationValue&gt; entry : map.entrySet()) {
-    //注解key
-    String key = entry.getKey().getSimpleName().toString();
-    //注解value()返回的是一个集合Collection，通过迭代出下一个的值
-    Object value = entry.getValue().getValue();
-    //增加注解初始值
-    annotationBuilder.addMember(key, &quot;$S&quot;, value);
-    //打印信息，在此处遇到一个问题，下边的打印方法貌似会覆盖之前的打印数据。
-    messager.printMessage(
-            Diagnostic.Kind.ERROR,
-            String.format(&quot;全类名：&quot; + simpleName + &quot;   注解key：&quot; + key + &quot;   注解值：&quot; + value, this),
-            element);
-}
-//new一个新的注解空间
-AnnotationSpec annotationSpec = annotationBuilder.build();
-</code></pre><p>8：messager打印的时候遇到一个问题，最后打印的数据貌似会把之前的数据覆盖，导致在for循环的时候，我一直认为数据是不对的，很坑爹。</p>
+</code></pre><ol>
+<li><p>我们在遍历获取类文件里边的元素时，首先获取的是构造函数。</p>
+</li>
+<li><p>以下是获取注解的代码，返回一个集合</p>
+<p>  List&lt;? extends AnnotationMirror&gt; annotationMirrors = element.getAnnotationMirrors();</p>
+</li>
+<li><p>以下是获取注解类型的代码</p>
+<p> DeclaredType declaredType = annotationMirrors.get(i).getAnnotationType();</p>
+</li>
+<li><p>以下是获取注解值的代码，返回一个map</p>
+<p> Map&lt;? extends ExecutableElement, ? extends AnnotationValue&gt; map = annotationMirrors.get(i).getElementValues();</p>
+</li>
+<li><p>创建一个新的注解</p>
+<p> //通过全类名返回一个类，此类用于生成注解<br> Class clazz = Class.forName(simpleName);<br> //创建一个新的注解<br> AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(clazz);<br> //for循环遍历集合，用户有可能自定义注解，并且会有多个注解值，看来这块需要遍历保存<br> for (Map.Entry&lt;? extends ExecutableElement, ? extends AnnotationValue&gt; entry : map.entrySet()) {</p>
+<pre><code>//注解key
+String key = entry.getKey().getSimpleName().toString();
+//注解value()返回的是一个集合Collection，通过迭代出下一个的值
+Object value = entry.getValue().getValue();
+//增加注解初始值
+annotationBuilder.addMember(key, &quot;$S&quot;, value);
+//打印信息，在此处遇到一个问题，下边的打印方法貌似会覆盖之前的打印数据。
+messager.printMessage(
+        Diagnostic.Kind.ERROR,
+        String.format(&quot;全类名：&quot; + simpleName + &quot;   注解key：&quot; + key + &quot;   注解值：&quot; + value, this),
+        element);
+</code></pre><p> }<br> //new一个新的注解空间<br> AnnotationSpec annotationSpec = annotationBuilder.build();</p>
+</li>
+<li><p>messager打印的时候遇到一个问题，最后打印的数据貌似会把之前的数据覆盖，导致在for循环的时候，我一直认为数据是不对的，很坑爹。</p>
+</li>
+</ol>
 <h2 id="javapoet"><a href="#javapoet" class="headerlink" title="javapoet"></a>javapoet</h2><p>他就像是一个代码生成器，我们写入一定的指令（代码），java poet自动写出java源代码。那它都可以写什么东西呢，应该是什么都可以生成，为什么说应该呢，因为并不是所有的东西我都去试过，我试过生成类，构造方法，普通方法，变量，枚举，注解。这些是都可以做到的。</p>
 <p>简单记录一个生成HelloWord的代码，下边的工程会用到。</p>
-<pre><code>MethodSpec main = MethodSpec.methodBuilder(&quot;main&quot;) //main代表方法名
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)//Modifier 修饰的关键字
-                .addParameter(String[].class, &quot;args&quot;) //添加string[]类型的名为args的参数
-                .addStatement(&quot;$T.out.println($S)&quot;, System.class, &quot;Hello World&quot;)//添加代码，这里$T和$S后面会讲，这里其实就是添加了System,out.println(&quot;Hello World&quot;);
-                .build();
-        TypeSpec typeSpec = TypeSpec.classBuilder(&quot;HelloWorld&quot;)//HelloWorld是类名
-                .addModifiers(Modifier.PUBLIC)
-                .addMethod(main)  //在类中添加方法
-                .build();
-        JavaFile javaFile = JavaFile.builder(&quot;com.acode.main&quot;, typeSpec)
-                .build();
-//        javaFile.writeTo(processingEnv.getFiler());
-//        javaFile.writeTo(new File(&quot;F:/code/JavaPoet/acode_main/src/main/java/com/acode/main&quot;));
-//        javaFile.writeTo(new File(&quot;acode_main/src/main/java/&quot;));
-        javaFile.writeTo(new File(&quot;F:/code/JavaPoet/acode_main/src/main/java&quot;));
+<pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">   MethodSpec main = MethodSpec.methodBuilder(<span class="string">"main"</span>) <span class="comment">//main代表方法名</span></div><div class="line">                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)<span class="comment">//Modifier 修饰的关键字</span></div><div class="line">                .addParameter(String[].class, <span class="string">"args"</span>) <span class="comment">//添加string[]类型的名为args的参数</span></div><div class="line">                .addStatement(<span class="string">"$T.out.println($S)"</span>, System.class, <span class="string">"Hello World"</span>)<span class="comment">//添加代码，这里$T和$S后面会讲，这里其实就是添加了System,out.println("Hello World");</span></div><div class="line">                .build();</div><div class="line">        TypeSpec typeSpec = TypeSpec.classBuilder(<span class="string">"HelloWorld"</span>)<span class="comment">//HelloWorld是类名</span></div><div class="line">                .addModifiers(Modifier.PUBLIC)</div><div class="line">                .addMethod(main)  <span class="comment">//在类中添加方法</span></div><div class="line">                .build();</div><div class="line">        JavaFile javaFile = JavaFile.builder(<span class="string">"com.acode.main"</span>, typeSpec)</div><div class="line">                .build();</div><div class="line"><span class="comment">//        javaFile.writeTo(processingEnv.getFiler());</span></div><div class="line"><span class="comment">//        javaFile.writeTo(new File("F:/code/JavaPoet/acode_main/src/main/java/com/acode/main"));</span></div><div class="line"><span class="comment">//        javaFile.writeTo(new File("acode_main/src/main/java/"));</span></div><div class="line">        javaFile.writeTo(<span class="keyword">new</span> File(<span class="string">"F:/code/JavaPoet/acode_main/src/main/java"</span>));</div></pre></td></tr></table></figure>
 </code></pre><h2 id="Abstractprocessor"><a href="#Abstractprocessor" class="headerlink" title="Abstractprocessor"></a>Abstractprocessor</h2><p>这玩意给我的感觉就像是解析XML，唯一不同的就是他解析的是java类，我们需要定义自己的处理器，重写他的四个方法。</p>
-<pre><code>package com.example;
-public class MyProcessor extends AbstractProcessor {
-
-    @Override
-    public synchronized void init(ProcessingEnvironment env){ }
-
-    @Override
-    public boolean process(Set&lt;? extends TypeElement&gt; annoations, RoundEnvironment env) { }
-
-    @Override
-    public Set&lt;String&gt; getSupportedAnnotationTypes() { }
-
-    @Override
-    public SourceVersion getSupportedSourceVersion() { }
-
-}
+<pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.example;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyProcessor</span> <span class="keyword">extends</span> <span class="title">AbstractProcessor</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ProcessingEnvironment env)</span></span>&#123; &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; annoations, RoundEnvironment env)</span> </span>&#123; &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Set&lt;String&gt; <span class="title">getSupportedAnnotationTypes</span><span class="params">()</span> </span>&#123; &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> SourceVersion <span class="title">getSupportedSourceVersion</span><span class="params">()</span> </span>&#123; &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><ul>
 <li><p>init(ProcessingEnvironment env): 每一个注解处理器类都必须有一个空的构造函数。然而，这里有一个特殊的init()方法，它会被注解处理工具调用，并输入ProcessingEnviroment参数。ProcessingEnviroment提供很多有用的工具类Elements,Types和Filer。后面我们将看到详细的内容。</p>
 </li>
@@ -478,146 +451,7 @@ targetCompatibility = &quot;1.7&quot;
 public @interface AcodeInjc {
 }
 </code></pre><p>注解写完之后，写我们编译时执行的代码，继承Abstractprocessor。</p>
-<pre><code>package com.acode.lib.processor;
-
-import com.acode.lib.annotation.AcodeInjc;
-import com.google.auto.service.AutoService;
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.TypeSpec;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.Filer;
-import javax.annotation.processing.Messager;
-import javax.annotation.processing.ProcessingEnvironment;
-import javax.annotation.processing.Processor;
-import javax.annotation.processing.RoundEnvironment;
-import javax.lang.model.SourceVersion;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
-import javax.lang.model.element.Modifier;
-import javax.lang.model.element.TypeElement;
-import javax.lang.model.util.Elements;
-import javax.lang.model.util.Types;
-import javax.tools.Diagnostic;
-
-/**
- * user：yangtao.
- * date：2017/6/16
- * describe：java注解处理器，在编译的时候会执行这块代码
- */
-@AutoService(Processor.class)
-public class AcodeTestProcessor extends AbstractProcessor {
-    private Types typeUtils;
-
-    private Elements elementUtils;
-
-    private Messager messager;
-
-    private Filer filer;
-
-    private Map&lt;String, AcodeTestProcessor&gt; acodeTestProcessorMap = new LinkedHashMap&lt;String, AcodeTestProcessor&gt;();
-
-
-    //每一个注解处理器类都必须有一个空的构造函数。然而，这里有一个特殊的init()方法，
-    // 它会被注解处理工具调用，并输入ProcessingEnviroment参数。
-    // ProcessingEnviroment提供很多有用的工具类Elements,Types和Filer。后面我们将看到详细的内容。
-    @Override
-    public synchronized void init(ProcessingEnvironment processingEnvironment) {
-        super.init(processingEnvironment);
-        typeUtils = processingEnvironment.getTypeUtils();
-        elementUtils = processingEnvironment.getElementUtils();
-        filer = processingEnvironment.getFiler();
-        messager = processingEnvironment.getMessager();
-    }
-
-    //这相当于每个处理器的主函数main()。
-    // 你在这里写你的扫描、评估和处理注解的代码，以及生成Java文件。
-    // 输入参数RoundEnviroment，可以让你查询出包含特定注解的被注解元素。后面我们将看到详细的内容。
-    @Override
-    public boolean process(Set&lt;? extends TypeElement&gt; set, RoundEnvironment roundEnvironment) {
-        //处理注解的逻辑
-        //遍历所有注解是AcodeInjc的类
-        //roundEnv.getElementsAnnotatedWith(Factory.class))返回所有被注解了@Factory的元素的列表。
-        // 你可能已经注意到，我们并没有说“所有被注解了@Factory的类的列表”，
-        // 因为它真的是返回Element的列表。
-        // 请记住：Element可以是类、方法、变量等。所以，接下来，我们必须检查这些Element是否是一个类：
-        try {
-            for (Element anno : roundEnvironment.getElementsAnnotatedWith(AcodeInjc.class)) {
-                //如果被注解的不是一个类，则提示类错误信息
-                if (anno.getKind() != ElementKind.CLASS) {
-                    error(anno, &quot;这是一个错误的信息&quot;, AcodeInjc.class.getSimpleName());
-                    return true;
-                } else {
-                //去生成一个HelloWorld的类
-                    generateHelloworld();
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    //这里你必须指定，这个注解处理器是注册给哪个注解的。
-    // 注意，它的返回值是一个字符串的集合，包含本处理器想要处理的注解类型的合法全称。
-    // 换句话说，你在这里定义你的注解处理器注册到哪些注解上。
-    @Override
-    public Set&lt;String&gt; getSupportedAnnotationTypes() {
-        return Collections.singleton(AcodeInjc.class.getCanonicalName());
-    }
-
-    // 用来指定你使用的Java版本。通常这里返回SourceVersion.latestSupported()。
-    // 然而，如果你有足够的理由只支持Java 6的话，你也可以返回SourceVersion.RELEASE_6。我推荐你使用前者。
-    @Override
-    public SourceVersion getSupportedSourceVersion() {
-        return SourceVersion.latestSupported();
-    }
-
-    /**
-     * 测试编译生成类
-     *
-     * @throws IOException
-     */
-    private void generateHelloworld() throws IOException {
-        MethodSpec main = MethodSpec.methodBuilder(&quot;main&quot;) //main代表方法名
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)//Modifier 修饰的关键字
-                .addParameter(String[].class, &quot;args&quot;) //添加string[]类型的名为args的参数
-                .addStatement(&quot;$T.out.println($S)&quot;, System.class, &quot;Hello World&quot;)//添加代码，这里$T和$S后面会讲，这里其实就是添加了System,out.println(&quot;Hello World&quot;);
-                .build();
-        TypeSpec typeSpec = TypeSpec.classBuilder(&quot;HelloWorld&quot;)//HelloWorld是类名
-                .addModifiers(Modifier.PUBLIC)
-                .addMethod(main)  //在类中添加方法
-                .build();
-        JavaFile javaFile = JavaFile.builder(&quot;com.acode.main&quot;, typeSpec)
-                .build();
-//        javaFile.writeTo(processingEnv.getFiler());
-//        javaFile.writeTo(new File(&quot;F:/code/JavaPoet/acode_main/src/main/java/com/acode/main&quot;));
-//        javaFile.writeTo(new File(&quot;acode_main/src/main/java/&quot;));
-        javaFile.writeTo(new File(&quot;F:/code/JavaPoet/acode_main/src/main/java&quot;));
-    }
-
-    /**
-     * 错误信息提示
-     *
-     * @param e
-     * @param msg
-     * @param args
-     */
-    private void error(Element e, String msg, Object... args) {
-        messager.printMessage(
-                Diagnostic.Kind.ERROR,
-                String.format(msg, args),
-                e);
-    }
-}
+<pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.acode.lib.processor;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.acode.lib.annotation.AcodeInjc;</div><div class="line"><span class="keyword">import</span> com.google.auto.service.AutoService;</div><div class="line"><span class="keyword">import</span> com.squareup.javapoet.JavaFile;</div><div class="line"><span class="keyword">import</span> com.squareup.javapoet.MethodSpec;</div><div class="line"><span class="keyword">import</span> com.squareup.javapoet.TypeSpec;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.util.Collections;</div><div class="line"><span class="keyword">import</span> java.util.LinkedHashMap;</div><div class="line"><span class="keyword">import</span> java.util.Map;</div><div class="line"><span class="keyword">import</span> java.util.Set;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.annotation.processing.AbstractProcessor;</div><div class="line"><span class="keyword">import</span> javax.annotation.processing.Filer;</div><div class="line"><span class="keyword">import</span> javax.annotation.processing.Messager;</div><div class="line"><span class="keyword">import</span> javax.annotation.processing.ProcessingEnvironment;</div><div class="line"><span class="keyword">import</span> javax.annotation.processing.Processor;</div><div class="line"><span class="keyword">import</span> javax.annotation.processing.RoundEnvironment;</div><div class="line"><span class="keyword">import</span> javax.lang.model.SourceVersion;</div><div class="line"><span class="keyword">import</span> javax.lang.model.element.Element;</div><div class="line"><span class="keyword">import</span> javax.lang.model.element.ElementKind;</div><div class="line"><span class="keyword">import</span> javax.lang.model.element.Modifier;</div><div class="line"><span class="keyword">import</span> javax.lang.model.element.TypeElement;</div><div class="line"><span class="keyword">import</span> javax.lang.model.util.Elements;</div><div class="line"><span class="keyword">import</span> javax.lang.model.util.Types;</div><div class="line"><span class="keyword">import</span> javax.tools.Diagnostic;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * user：yangtao.</div><div class="line"> * date：2017/6/16</div><div class="line"> * describe：java注解处理器，在编译的时候会执行这块代码</div><div class="line"> */</div><div class="line"><span class="meta">@AutoService</span>(Processor.class)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AcodeTestProcessor</span> <span class="keyword">extends</span> <span class="title">AbstractProcessor</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Types typeUtils;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Elements elementUtils;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Messager messager;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Filer filer;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Map&lt;String, AcodeTestProcessor&gt; acodeTestProcessorMap = <span class="keyword">new</span> LinkedHashMap&lt;String, AcodeTestProcessor&gt;();</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">//每一个注解处理器类都必须有一个空的构造函数。然而，这里有一个特殊的init()方法，</span></div><div class="line">    <span class="comment">// 它会被注解处理工具调用，并输入ProcessingEnviroment参数。</span></div><div class="line">    <span class="comment">// ProcessingEnviroment提供很多有用的工具类Elements,Types和Filer。后面我们将看到详细的内容。</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ProcessingEnvironment processingEnvironment)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.init(processingEnvironment);</div><div class="line">        typeUtils = processingEnvironment.getTypeUtils();</div><div class="line">        elementUtils = processingEnvironment.getElementUtils();</div><div class="line">        filer = processingEnvironment.getFiler();</div><div class="line">        messager = processingEnvironment.getMessager();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//这相当于每个处理器的主函数main()。</span></div><div class="line">    <span class="comment">// 你在这里写你的扫描、评估和处理注解的代码，以及生成Java文件。</span></div><div class="line">    <span class="comment">// 输入参数RoundEnviroment，可以让你查询出包含特定注解的被注解元素。后面我们将看到详细的内容。</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">process</span><span class="params">(Set&lt;? extends TypeElement&gt; set, RoundEnvironment roundEnvironment)</span> </span>&#123;</div><div class="line">        <span class="comment">//处理注解的逻辑</span></div><div class="line">        <span class="comment">//遍历所有注解是AcodeInjc的类</span></div><div class="line">        <span class="comment">//roundEnv.getElementsAnnotatedWith(Factory.class))返回所有被注解了@Factory的元素的列表。</span></div><div class="line">        <span class="comment">// 你可能已经注意到，我们并没有说“所有被注解了@Factory的类的列表”，</span></div><div class="line">        <span class="comment">// 因为它真的是返回Element的列表。</span></div><div class="line">        <span class="comment">// 请记住：Element可以是类、方法、变量等。所以，接下来，我们必须检查这些Element是否是一个类：</span></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">for</span> (Element anno : roundEnvironment.getElementsAnnotatedWith(AcodeInjc.class)) &#123;</div><div class="line">                <span class="comment">//如果被注解的不是一个类，则提示类错误信息</span></div><div class="line">                <span class="keyword">if</span> (anno.getKind() != ElementKind.CLASS) &#123;</div><div class="line">                    error(anno, <span class="string">"这是一个错误的信息"</span>, AcodeInjc.class.getSimpleName());</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="comment">//去生成一个HelloWorld的类</span></div><div class="line">                    generateHelloworld();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//这里你必须指定，这个注解处理器是注册给哪个注解的。</span></div><div class="line">    <span class="comment">// 注意，它的返回值是一个字符串的集合，包含本处理器想要处理的注解类型的合法全称。</span></div><div class="line">    <span class="comment">// 换句话说，你在这里定义你的注解处理器注册到哪些注解上。</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Set&lt;String&gt; <span class="title">getSupportedAnnotationTypes</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> Collections.singleton(AcodeInjc.class.getCanonicalName());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 用来指定你使用的Java版本。通常这里返回SourceVersion.latestSupported()。</span></div><div class="line">    <span class="comment">// 然而，如果你有足够的理由只支持Java 6的话，你也可以返回SourceVersion.RELEASE_6。我推荐你使用前者。</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> SourceVersion <span class="title">getSupportedSourceVersion</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> SourceVersion.latestSupported();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 测试编译生成类</div><div class="line">     *</div><div class="line">     * <span class="doctag">@throws</span> IOException</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">generateHelloworld</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">        MethodSpec main = MethodSpec.methodBuilder(<span class="string">"main"</span>) <span class="comment">//main代表方法名</span></div><div class="line">                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)<span class="comment">//Modifier 修饰的关键字</span></div><div class="line">                .addParameter(String[].class, <span class="string">"args"</span>) <span class="comment">//添加string[]类型的名为args的参数</span></div><div class="line">                .addStatement(<span class="string">"$T.out.println($S)"</span>, System.class, <span class="string">"Hello World"</span>)<span class="comment">//添加代码，这里$T和$S后面会讲，这里其实就是添加了System,out.println("Hello World");</span></div><div class="line">                .build();</div><div class="line">        TypeSpec typeSpec = TypeSpec.classBuilder(<span class="string">"HelloWorld"</span>)<span class="comment">//HelloWorld是类名</span></div><div class="line">                .addModifiers(Modifier.PUBLIC)</div><div class="line">                .addMethod(main)  <span class="comment">//在类中添加方法</span></div><div class="line">                .build();</div><div class="line">        JavaFile javaFile = JavaFile.builder(<span class="string">"com.acode.main"</span>, typeSpec)</div><div class="line">                .build();</div><div class="line"><span class="comment">//        javaFile.writeTo(processingEnv.getFiler());</span></div><div class="line"><span class="comment">//        javaFile.writeTo(new File("F:/code/JavaPoet/acode_main/src/main/java/com/acode/main"));</span></div><div class="line"><span class="comment">//        javaFile.writeTo(new File("acode_main/src/main/java/"));</span></div><div class="line">        javaFile.writeTo(<span class="keyword">new</span> File(<span class="string">"F:/code/JavaPoet/acode_main/src/main/java"</span>));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 错误信息提示</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> e</div><div class="line">     * <span class="doctag">@param</span> msg</div><div class="line">     * <span class="doctag">@param</span> args</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">error</span><span class="params">(Element e, String msg, Object... args)</span> </span>&#123;</div><div class="line">        messager.printMessage(</div><div class="line">                Diagnostic.Kind.ERROR,</div><div class="line">                String.format(msg, args),</div><div class="line">                e);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </code></pre><p>java lib的代码大功告成，我们新建一个moudle来测试这个代码，增加以下依赖。</p>
 <pre><code>compile project(&apos;:acode_javapoet_lib&apos;)
 apt project(&apos;:acode_javapoet_lib&apos;)
