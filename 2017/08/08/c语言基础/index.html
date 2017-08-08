@@ -112,7 +112,7 @@
 <meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/c_17.png">
 <meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/c_18.png">
 <meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/c_20.png">
-<meta property="og:updated_time" content="2017-08-08T10:52:44.341Z">
+<meta property="og:updated_time" content="2017-08-08T10:54:51.157Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c语言基础">
 <meta name="twitter:description" content="文字不够，图片来凑……
@@ -469,7 +469,7 @@ int main(){
 </code></pre><p>打印结果：<br><img src="http://oif1jvh5f.bkt.clouddn.com/c_03.png" alt="c_03" title="c_03"></p>
 <p>%#x是打印内存地址的占位符，其实这点我感觉挺烦的，c语言内部做个匹配多好，反正变量是什么类型，系统是知道的，对应打出来不就行了，还要人为去操作。接着写，第一次p的值和第二次p的值打印的内存地址是一致的，没问题。第一次<em>p的值，和第二次</em>p的值发现由10变成了20，而第一次的10是哪来的呢？上边我们说了p取的a的内存地址，<em>p取的p的内存地址上的值。所以我们可以得出</em>p其实取的是a的值。最后我们再看打印的a的值：20。可我们不是定义的int a = 10吗。怎么打印变成20了，仔细想想，因为<em>p=20，</em>p指向的是p的内存地址上的值，而a的内存地址跟p是一样的，也就是*p其实指向的也是a的内存地址上的值。现在是不是一目了然了，完美！</p>
 <p>接下来我试着去写了一下p++和<em>p++和(</em>p)++,让我们来看下打印结果</p>
-<h4 id="p-内存地址"><a href="#p-内存地址" class="headerlink" title="p++  内存地址++"></a>p++  内存地址++</h4><pre><code>int main(){
+<h3 id="p-内存地址"><a href="#p-内存地址" class="headerlink" title="p++  内存地址++"></a>p++  内存地址++</h3><pre><code>int main(){
     int a = 10;
     int *p;
     p = &amp;a;
@@ -482,7 +482,7 @@ int main(){
     return 0;
 }
 </code></pre><p>打印结果：<br><img src="http://oif1jvh5f.bkt.clouddn.com/c_04.png" alt="c_04" title="c_04"></p>
-<h4 id="p"><a href="#p" class="headerlink" title="*p++"></a>*p++</h4><pre><code>int main(){
+<h3 id="p"><a href="#p" class="headerlink" title="*p++"></a>*p++</h3><pre><code>int main(){
     int a = 10;
     int *p;
     p = &amp;a;
@@ -495,7 +495,7 @@ int main(){
     return 0;
 }
 </code></pre><p>打印结果：<br><img src="http://oif1jvh5f.bkt.clouddn.com/c_05.png" alt="c_05" title="c_05"><br>这里就要用到c语言的运算符的优先级了，++的优先级高于<em>，所以先执行p++。上边已经运行了p++，可以看到运行结果(上图c_04.jpg)，p++是内存地址的++。</em>p取的是内存地址上的值。因为没有这个内存地址，所以没有取到值。</p>
-<h4 id="p-1"><a href="#p-1" class="headerlink" title="(*p)++"></a>(*p)++</h4><pre><code>int main(){
+<h3 id="p-1"><a href="#p-1" class="headerlink" title="(*p)++"></a>(*p)++</h3><pre><code>int main(){
     int a = 10;
     int *p;
     p = &amp;a;
@@ -531,7 +531,7 @@ int main(){
 </code></pre><p>打印结果：<br><img src="http://oif1jvh5f.bkt.clouddn.com/c_08.png" alt="c_08" title="c_08"><br>在c语言中，指针变量指向的是内存地址，同样数组的内存地址也可以指向，数组名就是数组的首地址。</p>
 <pre><code>int len = sizeof(a)/sizeof(int);
 </code></pre><p>前边说了sizeof获取的是内存大小，sizeof(a)获取的是数组a所占的内存大小，sizeof(int)获取的是一个int类型的数据所占的内存大小，数组的内存大小/单个int的内存大小=数组的长度。</p>
-<h2 id="指针数组和数组指针"><a href="#指针数组和数组指针" class="headerlink" title="指针数组和数组指针"></a>指针数组和数组指针</h2><h4 id="指针数组"><a href="#指针数组" class="headerlink" title="指针数组"></a>指针数组</h4><pre><code>int main() {
+<h2 id="指针数组和数组指针"><a href="#指针数组和数组指针" class="headerlink" title="指针数组和数组指针"></a>指针数组和数组指针</h2><h3 id="指针数组"><a href="#指针数组" class="headerlink" title="指针数组"></a>指针数组</h3><pre><code>int main() {
     char* name[] = {&quot;张三&quot;,&quot;李四&quot;,&quot;王五&quot;,&quot;赵六&quot;};
     int i, n = 4;
     for (i = 0; i &lt; n; i++){
@@ -541,7 +541,7 @@ int main(){
     return 0;
 }
 </code></pre><p>打印结果：<br><img src="http://oif1jvh5f.bkt.clouddn.com/c_10.png" alt="c_10" title="c_10"><br>char<em> name[]这是一个指针数组，一个叫name的数组，他的返回类型是char</em>，一个指针。同样，返回类型是指针，数组存的同样也是指针，而指针的含义就是指针变量所指向的内存地址的值。所以可以理解指针数组存的其实就是真实的数据。所以在打印的时候直接打印name[i]，就可以打印出数组的内容。</p>
-<h4 id="数组指针"><a href="#数组指针" class="headerlink" title="数组指针"></a>数组指针</h4><pre><code>int main() {
+<h3 id="数组指针"><a href="#数组指针" class="headerlink" title="数组指针"></a>数组指针</h3><pre><code>int main() {
     int name1[4] = { 666, 777, 555, 444 };
     int (*name2)[4] = NULL;
     name2 = &amp;name1;
@@ -1023,7 +1023,7 @@ int main(){
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#宇宙最强编程入门大法Hello-World"><span class="nav-number">1.</span> <span class="nav-text">宇宙最强编程入门大法Hello World</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c语言基本数据类型了解"><span class="nav-number">2.</span> <span class="nav-text">c语言基本数据类型了解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针"><span class="nav-number">3.</span> <span class="nav-text">指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#p-内存地址"><span class="nav-number">3.0.1.</span> <span class="nav-text">p++  内存地址++</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#p"><span class="nav-number">3.0.2.</span> <span class="nav-text">*p++</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#p-1"><span class="nav-number">3.0.3.</span> <span class="nav-text">(*p)++</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针和数组"><span class="nav-number">4.</span> <span class="nav-text">指针和数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针数组和数组指针"><span class="nav-number">5.</span> <span class="nav-text">指针数组和数组指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#指针数组"><span class="nav-number">5.0.1.</span> <span class="nav-text">指针数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组指针"><span class="nav-number">5.0.2.</span> <span class="nav-text">数组指针</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数指针"><span class="nav-number">6.</span> <span class="nav-text">函数指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何进行动态内存分配"><span class="nav-number">7.</span> <span class="nav-text">如何进行动态内存分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-number">8.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串拼接"><span class="nav-number">9.</span> <span class="nav-text">字符串拼接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体"><span class="nav-number">10.</span> <span class="nav-text">结构体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体数组"><span class="nav-number">11.</span> <span class="nav-text">结构体数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#typedef指令"><span class="nav-number">12.</span> <span class="nav-text">typedef指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#冒泡排序"><span class="nav-number">13.</span> <span class="nav-text">冒泡排序</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#宇宙最强编程入门大法Hello-World"><span class="nav-number">1.</span> <span class="nav-text">宇宙最强编程入门大法Hello World</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c语言基本数据类型了解"><span class="nav-number">2.</span> <span class="nav-text">c语言基本数据类型了解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针"><span class="nav-number">3.</span> <span class="nav-text">指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#p-内存地址"><span class="nav-number">3.1.</span> <span class="nav-text">p++  内存地址++</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#p"><span class="nav-number">3.2.</span> <span class="nav-text">*p++</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#p-1"><span class="nav-number">3.3.</span> <span class="nav-text">(*p)++</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针和数组"><span class="nav-number">4.</span> <span class="nav-text">指针和数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针数组和数组指针"><span class="nav-number">5.</span> <span class="nav-text">指针数组和数组指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#指针数组"><span class="nav-number">5.1.</span> <span class="nav-text">指针数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组指针"><span class="nav-number">5.2.</span> <span class="nav-text">数组指针</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数指针"><span class="nav-number">6.</span> <span class="nav-text">函数指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何进行动态内存分配"><span class="nav-number">7.</span> <span class="nav-text">如何进行动态内存分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-number">8.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串拼接"><span class="nav-number">9.</span> <span class="nav-text">字符串拼接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体"><span class="nav-number">10.</span> <span class="nav-text">结构体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构体数组"><span class="nav-number">11.</span> <span class="nav-text">结构体数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#typedef指令"><span class="nav-number">12.</span> <span class="nav-text">typedef指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#冒泡排序"><span class="nav-number">13.</span> <span class="nav-text">冒泡排序</span></a></li></ol></div>
             
 
           </div>
