@@ -86,16 +86,28 @@
 
 
 
-<meta name="description" content="Acode的技术总结">
+<meta name="description" content="文字不够，图片来凑……
+胡编乱造
+命都是空调给的，没有空调，我算个p啊">
 <meta property="og:type" content="article">
 <meta property="og:title" content="c语言单链表和双链表">
 <meta property="og:url" content="http://workertao.coding.me/2017/08/08/c语言单链表和双链表/index.html">
 <meta property="og:site_name" content="Acode的技术总结">
-<meta property="og:description" content="Acode的技术总结">
-<meta property="og:updated_time" content="2017-08-08T10:24:43.533Z">
+<meta property="og:description" content="文字不够，图片来凑……
+胡编乱造
+命都是空调给的，没有空调，我算个p啊">
+<meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y17.jpg">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/c_23.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/c_24.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/c_25.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/c_26.png">
+<meta property="og:updated_time" content="2017-08-09T00:52:33.111Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c语言单链表和双链表">
-<meta name="twitter:description" content="Acode的技术总结">
+<meta name="twitter:description" content="文字不够，图片来凑……
+胡编乱造
+命都是空调给的，没有空调，我算个p啊">
+<meta name="twitter:image" content="http://ohdryj9ow.bkt.clouddn.com/y17.jpg">
 
 
 
@@ -368,7 +380,203 @@
       
 
       
-        
+        <p>文字不够，图片来凑……</p>
+<p>胡编乱造</p>
+<p>命都是空调给的，没有空调，我算个p啊</p>
+<p><img src="http://ohdryj9ow.bkt.clouddn.com/y17.jpg" alt="图1" title="图1"></p>
+<a id="more"></a>
+<h3 id="单链表"><a href="#单链表" class="headerlink" title="单链表"></a>单链表</h3><p>下边是我自己画的单链表的流程图，这里只做了从末尾添加结构体的操作。<br>单链表之前一直没搞懂是做什么用的，直到有人告诉我这是数据结构之后，我才放心的不去管它，搞java那会一直有人问，你懂数据结构吗？不知道怎么回答，现在看来可以回答我当然知道啦。当然这只是我懒得去搞懂他的借口，我也在百度上搜过大神的回答，链表作为最基本的数据结构，我们势必要去搞懂它。当熟悉了这个流程之后，写起来就简单多了。</p>
+<p><img src="http://oif1jvh5f.bkt.clouddn.com/c_23.png" alt="图23" title="图23"></p>
+<hr>
+<pre><code>typedef struct Node
+{
+    char *name;        //数据域
+    struct Node * next;//指针域   指向下一个节点的地址
+
+}node;
+
+void create(int len){
+    node *head ,*p ,*s;
+    head = (node*)malloc(sizeof(node*));
+    if (head==NULL){
+        //没有申请到内存，直接返回
+        return;
+    }
+    head-&gt;name = &quot;张三&quot;;
+    head-&gt;next = NULL;
+    p = head;
+    for (int i = 0; i &lt; len; i++){
+        s = (node*)malloc(sizeof(node*));
+        if (s == NULL){
+            //没有申请到内存，直接返回
+            return;
+        }
+        //拼接字符串
+        char cName[20];
+        //指针数组，存放要拼接的数据
+        char * c[20] = { &quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,&quot;e&quot;,&quot;f&quot;,&quot;g&quot;,&quot;j&quot;,&quot;k&quot;,&quot;l&quot;};
+        //char指针，申请内存
+        char * cN = (char*)malloc(sizeof(char*));
+        if (cN == NULL){
+            return;
+        }
+        //字符串拼接
+        strcpy(cName, &quot;李&quot;);
+        //字符串拼接
+        strcat(cName, c[i]);
+        //cN指针指向cName
+        cN = cName;
+
+        //给当前节点的数据域赋值
+        s-&gt;name = cN;
+        s-&gt;next = NULL;
+
+        p-&gt;next = s;
+        p = s;
+        printf(&quot;%s   %d\n&quot;, p-&gt;name, i);
+    }
+}
+
+int main(){
+    create(10);
+    system(&quot;pause&quot;);
+    return 0;
+}
+</code></pre><p>打印结果：<br><img src="http://oif1jvh5f.bkt.clouddn.com/c_24.png" alt="图24" title="图24"></p>
+<h3 id="双链表"><a href="#双链表" class="headerlink" title="双链表"></a>双链表</h3><p>双链表的含义其实就是比单链表多了一个指向上一个指针地址的指针域，head结构体的上一个指针域(previous)指向NULL,当前结构体的下一个指针域(next)指向NULL，下边是我理解的流程图。<br><img src="http://oif1jvh5f.bkt.clouddn.com/c_25.png" alt="图25" title="图25"><br>有了流程图，我们根据图示来撸码。这回我们稍微封装一下，创建一个头文件dlist.h，用来写我们的接口。</p>
+<pre><code>#ifndef _DLIST_H
+#define _DLIST_H
+
+typedef struct node
+{
+    int data;
+    struct node * previous;
+    struct node * next;
+} Node;
+
+typedef struct dlist
+{
+    Node * head;
+} Dlist;
+
+void d_init(Dlist * list);//初始化
+bool d_insert(Dlist * list, const int data);//插入
+bool d_remove(Dlist * list, const int key);//移除
+bool d_modify(Dlist * list, const int key, const int data);//修改
+Node* d_find(Dlist * list, const int key);//查找
+void d_treaverse(Dlist * list, void(*func)(void * pointer));//遍历
+void d_datalist(Dlist * list);//遍历
+void d_destroy(Dlist * list);//销毁
+
+#endif //_DLIST_H
+</code></pre><p>在.cpp的类里写我们的实现，记得引入头部的依赖</p>
+<pre><code>#include &quot;dlist.h&quot;
+</code></pre><p>我这里只写了初始化，插入和遍历，其他的还没写。</p>
+<pre><code>static Node* make_node(const int data);//创建节点
+static void data_list(Node * current);//遍历链表，打印数据，包括头节点
+
+//@接口
+//创建头部 或者  初始化
+void d_init(Dlist * list){
+    list-&gt;head = make_node(-1);
+}
+
+//@接口
+//参数：list：头结点  data 插入的数据
+bool d_insert(Dlist * list, const int data){
+    //创建一个Node节点，指向头结点，为了遍历所有节点查找插入位置
+    Node * current = list-&gt;head;
+    //配合data数据域创建一个新的指针节点，便于进行增删改查操作。
+    Node * node;
+    //从头节点开始遍历，满足条件将当前节点重新赋值。
+    while (current-&gt;next != NULL &amp;&amp; current-&gt;data&lt;data){
+        current = current-&gt;next;
+    }
+    //如果当前节点的数据跟要插入的数据一样，则返回false
+    if (current-&gt;data == data){
+        printf(&quot;添加了重复的数据&quot;);
+        return false;
+    }
+    //将数据域传入创建节点的方法，创建一个新的节点，便于上一个节点的指针，进行指向。
+    node = make_node(data);
+    //如果当前节点是是尾节点，则当前节点指针next==NULL。
+    if (current-&gt;next == NULL){
+        //如果是尾节点，则将指针指向新创建的节点。
+        current-&gt;next = node;
+        //同样，新创建的指针的前驱指向当前的节点
+        node-&gt;previous = current;
+    }
+    else{
+        //如果当前节点不是尾节点，则当前节点指针next!=NULL,而是指向下一个节点的首地址
+        //将新节点的前驱指向当前节点的前驱
+        node-&gt;previous = current-&gt;previous;
+        //将新节点的后继指向当前节点，所以这时一个前插方式
+        node-&gt;next = current;
+        //将当前节点的前驱的后继指向新节点
+        current-&gt;previous-&gt;next = node;
+        //将当前节点的前驱指向新节点
+        current-&gt;previous = node;
+    }
+    return true;
+}
+
+//@接口
+//遍历
+void d_datalist(Dlist * list){
+    data_list(list-&gt;head-&gt;next);
+
+};
+
+//获取当前传入的node节点，打印当前节点的数据域
+static void data_list(Node * current){
+    Node * a = current;
+    while (a != NULL)
+    {
+        printf(&quot;数据：  %d \n&quot;, a-&gt;data);
+        a = a-&gt;next;
+    }
+}
+
+//创建一个新的节点
+static Node * make_node(const int data){
+    Node * node = (Node *)malloc(sizeof(Node *));
+    if (node == NULL)
+    {
+        exit(1);
+        printf(&quot;动态分配内存失败，程序结束&quot;);
+    }
+    node-&gt;data = data;
+    node-&gt;previous = NULL;
+    node-&gt;next = NULL;
+
+    return node;
+}
+
+int main(){
+    Dlist *d = (Dlist*)malloc(sizeof(Dlist*));
+    d_init(d);
+    d_insert(d, 90);
+    d_insert(d, 6);
+    d_insert(d, 50);
+    d_insert(d, 18);
+    d_insert(d, 20);
+    d_insert(d, 30);
+    d_datalist(d);
+    system(&quot;pause&quot;);
+    return 0;
+}
+</code></pre><p>把注释写的满满的，我们来看打印结果。</p>
+<p><img src="http://oif1jvh5f.bkt.clouddn.com/c_26.png" alt="图26" title="图26"></p>
+<hr>
+<p>总结：</p>
+<ol>
+<li>不管是单链表还是多链表都包含了数据域和指针域两种结构体变量(结构体内部的变量，我们叫做结构体变量)，而且指针域必须是当前的结构体类型的指针。</li>
+<li>以上事例中，他的数据域是name,指针域是next和previous。</li>
+<li>数据域我们可以自定义，他可以是我们想要的任何数据类型。</li>
+<li>单链表中当前结构体的下一个指针域(next)指向的NULL，上一个结构体的指针域指向的当前的结构体的内存地址。</li>
+<li>双向链表中head结构体的上一个指针域(previous)指向NULL,当前结构体的下一个指针域(next)指向NULL</li>
+</ol>
+
       
     </div>
 
@@ -478,8 +686,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oif1jvh5f.bkt.clouddn.com/nkplxvq2rntpng.png"
@@ -572,6 +789,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#单链表"><span class="nav-number">1.</span> <span class="nav-text">单链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双链表"><span class="nav-number">2.</span> <span class="nav-text">双链表</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
