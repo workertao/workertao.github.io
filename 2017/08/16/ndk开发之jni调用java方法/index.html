@@ -1,0 +1,931 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="jni," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Acode的技术总结" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://oif1jvh5f.bkt.clouddn.com/nkplxvq2rntpng.png?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="文字不够，图片来凑……
+胡编乱造
+像我这样懦弱的人，像我这样慵懒的人，越过山丘，才发现无人等候。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ndk开发之jni调用java方法">
+<meta property="og:url" content="http://workertao.coding.me/2017/08/16/ndk开发之jni调用java方法/index.html">
+<meta property="og:site_name" content="Acode的技术总结">
+<meta property="og:description" content="文字不够，图片来凑……
+胡编乱造
+像我这样懦弱的人，像我这样慵懒的人，越过山丘，才发现无人等候。">
+<meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y17.jpg">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/jni001.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/jni002.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/jni003.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/jni004.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/jni005.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/jni006.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/jni007.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/jni008.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/jni009.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/jni010.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/jni011.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/jni012.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/jni013.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/jni014.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/jni015.png">
+<meta property="og:image" content="http://oif1jvh5f.bkt.clouddn.com/jni016.png">
+<meta property="og:updated_time" content="2017-08-16T01:19:32.077Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ndk开发之jni调用java方法">
+<meta name="twitter:description" content="文字不够，图片来凑……
+胡编乱造
+像我这样懦弱的人，像我这样慵懒的人，越过山丘，才发现无人等候。">
+<meta name="twitter:image" content="http://ohdryj9ow.bkt.clouddn.com/y17.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://workertao.coding.me/2017/08/16/ndk开发之jni调用java方法/"/>
+
+
+
+
+
+  <title> ndk开发之jni调用java方法 | Acode的技术总结 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Acode的技术总结</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-link">
+          <a href="/link" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            收藏
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/08/16/ndk开发之jni调用java方法/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Acode">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://oif1jvh5f.bkt.clouddn.com/nkplxvq2rntpng.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Acode的技术总结">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Acode的技术总结" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ndk开发之jni调用java方法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-16T09:16:20+08:00">
+                2017-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ndk开发/" itemprop="url" rel="index">
+                    <span itemprop="name">ndk开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2017/08/16/ndk开发之jni调用java方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/16/ndk开发之jni调用java方法/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文字不够，图片来凑……</p>
+<p>胡编乱造</p>
+<p>像我这样懦弱的人，像我这样慵懒的人，越过山丘，才发现无人等候。</p>
+<p><img src="http://ohdryj9ow.bkt.clouddn.com/y17.jpg" alt="图1" title="图1"></p>
+<a id="more"></a>
+<p>最近萌生了一个想法，想开一个奶茶店，像素这块基本都是年轻人。情侣，基佬，百合都不少，奶茶凉饮感觉年轻人都比较爱喝，反正我是挺喜欢喝柠檬水的，正好这块就缺个卖水的。集天时地利人和，开奶茶店的想法是越来越重了。但是钱还是不够。哎，妈的智障！没钱你说个蛋啊，我还是赶紧把这周学的jni总结一下，争取换个工资高点的公司，早日筹够开奶茶店的钱，从此走上人生巅峰，哈哈哈哈~MDZZ</p>
+<h1 id="jni百度百科"><a href="#jni百度百科" class="headerlink" title="jni百度百科"></a>jni百度百科</h1><p>JNI是Java Native Interface的缩写，它提供了若干的API实现了Java和其他语言的通信（主要是C&amp;C++）。从Java1.1开始，JNI标准成为java平台的一部分，它允许Java代码和其他语言写的代码进行交互。JNI一开始是为了本地已编译语言，尤其是C和C++而设计的，但是它并不妨碍你使用其他编程语言，只要调用约定受支持就可以了。使用java与本地已编译的代码交互，通常会丧失平台可移植性。但是，有些情况下这样做是可以接受的，甚至是必须的。例如，使用一些旧的库，与硬件、操作系统进行交互，或者为了提高程序的性能。JNI标准至少要保证本地代码能工作在任何Java 虚拟机环境。</p>
+<p>就目前我的使用情况来看，主要用于java和c的交互。如：在c中调用java本地方法，就需要使用jni提供的api方法。java中调用c的话可能比较常见，像友盟和环信的即时通讯的.so文件，就是c语言的动态库。</p>
+<h1 id="c语言通过jni调用java静态方法"><a href="#c语言通过jni调用java静态方法" class="headerlink" title="c语言通过jni调用java静态方法"></a>c语言通过jni调用java静态方法</h1><p>先来看一下java端的本地方法，</p>
+<pre><code>package com.jni.test;
+
+public class JniTest {
+    /**
+     * 通过jni给getStringFromc返回一个String
+     * @return
+     */
+    public native static String getStringFromc();
+
+    public static void main(String[] args) {
+        JniTest.getStringFromc();
+    }
+}
+</code></pre><p>java代码写好之后，通过javah生成.h头文件。这里需要注意，我们必须要在项目bin目录下执行javah命令。深坑~~~~之前试了好多个方法都不行，不知道哪出了问题，直到切换到bin目录下才生成.h文件。<br><img src="http://oif1jvh5f.bkt.clouddn.com/jni001.png" alt="jni001" title="jni001"></p>
+<p>可以看到在项目bin目录下生成了我们的.h头文件，<br><img src="http://oif1jvh5f.bkt.clouddn.com/jni002.png" alt="jni002" title="jni002"></p>
+<p>将.h头文件粘贴到我们创建好的c程序中。<br><img src="http://oif1jvh5f.bkt.clouddn.com/jni003.png" alt="jni003" title="jni003"></p>
+<p>然后切换到ide中并没有发现我们的.h头文件</p>
+<p><img src="http://oif1jvh5f.bkt.clouddn.com/jni004.png" alt="jni004" title="jni004"></p>
+<p>这是因为我们还没有添加到工程中，如下图，添加现有项目。<br><img src="http://oif1jvh5f.bkt.clouddn.com/jni005.png" alt="jni005" title="jni005"></p>
+<p>头文件添加成功之后，点开代码查看，我们会发现还有几处报红的地方。<br><img src="http://oif1jvh5f.bkt.clouddn.com/jni006.png" alt="jni006" title="jni006"></p>
+<p>这是因为找不到jni.h和jni_md.h， 这俩文件在我们的jdk目录下的include文件下，可以直接进行搜索。<br><img src="http://oif1jvh5f.bkt.clouddn.com/jni007.png" alt="jni007" title="jni007"></p>
+<p>然后将两个头文件添加到工程中，引用本地的头文件要用””;<br><img src="http://oif1jvh5f.bkt.clouddn.com/jni008.png" alt="jni008" title="jni008"></p>
+<p>到了上图呢，我们才算真正把java本地方法生成的头文件移植到了c程序中。接下来我们需要在c中写实现。</p>
+<p>有了头文件，我们直接写实现就行了，创建好c文件，引入头文件，实现头文件中的接口。如下</p>
+<h2 id="c端代码"><a href="#c端代码" class="headerlink" title="c端代码"></a>c端代码</h2><pre><code>#include &quot;stdafx.h&quot;
+#include &quot;com_jni_test_JniTest.h&quot;
+
+JNIEXPORT jstring JNICALL Java_com_jni_test_JniTest_getStringFromc
+(JNIEnv * env, jclass jclz){
+    return (*env)-&gt;NewStringUTF(env, &quot;hello jni&quot;);
+}
+</code></pre><p>这样就给我们的java方法返回了一个字符串“hello jni”，那如何检测呢？我们需要先生成.dll动态库。<br><img src="http://oif1jvh5f.bkt.clouddn.com/jni009.png" alt="jni009" title="jni009"><br><img src="http://oif1jvh5f.bkt.clouddn.com/jni010.png" alt="jni010" title="jni010"><br>配置好以上两步之后呢，我们点击导航栏生成-&gt;生成解决方案。看到log打印成功之后，检查项目路径是否生成.dll文件<br><img src="http://oif1jvh5f.bkt.clouddn.com/jni011.png" alt="jni011" title="jni011"></p>
+<p>然后我们将.dll文件拷贝到java工程中，在java代码中调用。</p>
+<h2 id="java端代码"><a href="#java端代码" class="headerlink" title="java端代码"></a>java端代码</h2><pre><code>package com.jni.test;
+
+public class JniTest {
+    /**
+     * 通过jni给getStringFromc返回一个String
+     * @return
+     */
+    public native static String getStringFromc();
+
+    static {
+        System.loadLibrary(&quot;Jni_Demo&quot;);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getStringFromc());
+    }
+}
+</code></pre><h2 id="打印结果"><a href="#打印结果" class="headerlink" title="打印结果"></a>打印结果</h2><p><img src="http://oif1jvh5f.bkt.clouddn.com/jni012.png" alt="jni012" title="jni012"></p>
+<h1 id="c语言通过jni调用java非静态方法"><a href="#c语言通过jni调用java非静态方法" class="headerlink" title="c语言通过jni调用java非静态方法"></a>c语言通过jni调用java非静态方法</h1><p>截图截的我有点恶心，我后悔了，不想写了怎么办？</p>
+<h2 id="java端代码-1"><a href="#java端代码-1" class="headerlink" title="java端代码"></a>java端代码</h2><pre><code>public native String geyStringFromC2();
+</code></pre><h2 id="c端代码-1"><a href="#c端代码-1" class="headerlink" title="c端代码"></a>c端代码</h2><pre><code>JNIEXPORT jstring JNICALL Java_com_jni_test_JniTest_getStringFromc2
+(JNIEnv * env, jclass jclz){
+    return (*env)-&gt;NewStringUTF(env, &quot;hello jni two&quot;);
+}
+</code></pre><h2 id="打印结果-1"><a href="#打印结果-1" class="headerlink" title="打印结果"></a>打印结果</h2><p><img src="http://oif1jvh5f.bkt.clouddn.com/jni013.png" alt="jni013" title="jni013"></p>
+<h2 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h2><pre><code>//静态方法
+JNIEXPORT jstring JNICALL Java_com_jni_test_JniTest_getStringFromc
+(JNIEnv * env, jclass jclz){
+    return (*env)-&gt;NewStringUTF(env, &quot;hello jni&quot;);
+}
+//非静态方法
+JNIEXPORT jstring JNICALL Java_com_jni_test_JniTest_geyStringFromc2
+(JNIEnv * env, jobject jobj){
+    return (*env)-&gt;NewStringUTF(env, &quot;hello jni two&quot;);
+}
+</code></pre><p>我发现生成的头文件中，两次的参数有所不同，当java方法中是静态方法时，这里的参数是(JNIEnv <em> env, jclass jclz)，而如果java中是非静态的方法时，这里的参数则是(JNIEnv </em> env, jobject jobj),给我的感觉就像是告诉C，我java中是静态方法，我给你传个类过来，你直接调用好了。或者我java中是非静态方法，我给你传个对象过来，你直接用好了。而不管哪种方式，都能够调用到所有能用的api。</p>
+<h1 id="c语言通过jni调用java非静态域"><a href="#c语言通过jni调用java非静态域" class="headerlink" title="c语言通过jni调用java非静态域"></a>c语言通过jni调用java非静态域</h1><h2 id="java端代码-2"><a href="#java端代码-2" class="headerlink" title="java端代码"></a>java端代码</h2><pre><code>    // jni访问java参数
+public String key = &quot;key&quot;;
+
+public native String accessField();
+</code></pre><h2 id="c端代码-2"><a href="#c端代码-2" class="headerlink" title="c端代码"></a>c端代码</h2><pre><code>JNIEXPORT jstring JNICALL Java_com_jni_test_JniTest_accessField
+(JNIEnv * env, jobject jobj){
+
+    jclass jclz = (*env)-&gt;GetObjectClass(env, jobj);
+    //属性名称，属性签名
+    jfieldID fid = (*env)-&gt;GetFieldID(env, jclz, &quot;key&quot;, &quot;Ljava/lang/String;&quot;);
+    //得到fid对应的值
+    jstring jstr = (*env)-&gt;GetObjectField(env, jobj, fid);
+
+    char * c_str = (*env)-&gt;GetStringUTFChars(env, jstr, NULL);
+
+    char text[30] = &quot;动脑 english&quot;;
+
+    strcat(text, c_str);
+
+    jstring new_str = (*env)-&gt;NewStringUTF(env, text);
+
+    (*env)-&gt;SetObjectField(env, jobj, fid, new_str);
+
+    return new_str;
+}
+</code></pre><h2 id="打印结果-2"><a href="#打印结果-2" class="headerlink" title="打印结果"></a>打印结果</h2><p><img src="http://oif1jvh5f.bkt.clouddn.com/jni014.png" alt="jni014" title="jni014"></p>
+<h2 id="小结：-1"><a href="#小结：-1" class="headerlink" title="小结："></a>小结：</h2><p>细细看的话，发现这玩意很想java反射，大概总结了以下几步</p>
+<ol>
+<li>得到jclass</li>
+<li>得到fieldId（变量ID）</li>
+<li>获取fid对应的jni值 string类型为jstring</li>
+<li>将jstring类型转换成c语言的string类型</li>
+<li>替换数据</li>
+<li>将c语言String类型的数据转换成jstring</li>
+<li>重新设置变量值<br>这么看来这玩意其实一点也不难。</li>
+</ol>
+<h1 id="c语言通过jni调用java静态域"><a href="#c语言通过jni调用java静态域" class="headerlink" title="c语言通过jni调用java静态域"></a>c语言通过jni调用java静态域</h1><h2 id="java端代码-3"><a href="#java端代码-3" class="headerlink" title="java端代码"></a>java端代码</h2><pre><code>public static int count = 9;
+
+public native void accessStaticField();
+</code></pre><h2 id="c端代码-3"><a href="#c端代码-3" class="headerlink" title="c端代码"></a>c端代码</h2><pre><code>//这里访问的是java的静态变量域，所以参数是一个object
+JNIEXPORT void JNICALL Java_com_jni_test_JniTest_accessStaticField
+(JNIEnv * env, jobject jobj){
+    jclass jclz = (*env)-&gt;GetObjectClass(env, jobj);
+    //属性名称，属性签名
+    jfieldID fid = (*env)-&gt;GetStaticFieldID(env, jclz, &quot;count&quot;, &quot;I&quot;);
+    //得到fid对应的值
+    jint count = (*env)-&gt;GetStaticIntField(env, jclz, fid);
+
+    if (fid == NULL){
+        printf(&quot;fid is null&quot;);
+    }
+
+    count++;
+
+    (*env)-&gt;SetStaticIntField(env, jclz, fid, count);
+}
+</code></pre><h2 id="打印结果-3"><a href="#打印结果-3" class="headerlink" title="打印结果"></a>打印结果</h2><p><img src="http://oif1jvh5f.bkt.clouddn.com/jni015.png" alt="jni015" title="jni015"></p>
+<h2 id="小结：-2"><a href="#小结：-2" class="headerlink" title="小结："></a>小结：</h2><ol>
+<li>得到jclass</li>
+<li>得到fieldId（变量ID）</li>
+<li>获取fid对应的jni值 int类型为jint</li>
+<li>count++</li>
+<li>重新设置变量值</li>
+</ol>
+<p>最后来一张jni数据类型对应的签名图</p>
+<p><img src="http://oif1jvh5f.bkt.clouddn.com/jni016.png" alt="jni016" title="jni016"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jni/" rel="tag"># jni</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/08/c语言单链表和双链表/" rel="next" title="c语言单链表和双链表">
+                <i class="fa fa-chevron-left"></i> c语言单链表和双链表
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/08/16/ndk开发之jni调用java方法/"
+     data-title="ndk开发之jni调用java方法"
+     data-content=""
+     data-url="http://workertao.coding.me/2017/08/16/ndk开发之jni调用java方法/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/08/16/ndk开发之jni调用java方法/"
+           data-title="ndk开发之jni调用java方法" data-url="http://workertao.coding.me/2017/08/16/ndk开发之jni调用java方法/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oif1jvh5f.bkt.clouddn.com/nkplxvq2rntpng.png"
+               alt="Acode" />
+          <p class="site-author-name" itemprop="name">Acode</p>
+          <p class="site-description motion-element" itemprop="description">Acode的技术总结</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/workertao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://genng.github.io/" title="genng" target="_blank">genng</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://sidongyu.github.io/" title="siyu" target="_blank">siyu</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://androidyuan.com/tags" title="弯弯" target="_blank">弯弯</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jni百度百科"><span class="nav-number">1.</span> <span class="nav-text">jni百度百科</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c语言通过jni调用java静态方法"><span class="nav-number">2.</span> <span class="nav-text">c语言通过jni调用java静态方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#c端代码"><span class="nav-number">2.1.</span> <span class="nav-text">c端代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java端代码"><span class="nav-number">2.2.</span> <span class="nav-text">java端代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印结果"><span class="nav-number">2.3.</span> <span class="nav-text">打印结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c语言通过jni调用java非静态方法"><span class="nav-number">3.</span> <span class="nav-text">c语言通过jni调用java非静态方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java端代码-1"><span class="nav-number">3.1.</span> <span class="nav-text">java端代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c端代码-1"><span class="nav-number">3.2.</span> <span class="nav-text">c端代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印结果-1"><span class="nav-number">3.3.</span> <span class="nav-text">打印结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结："><span class="nav-number">3.4.</span> <span class="nav-text">小结：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c语言通过jni调用java非静态域"><span class="nav-number">4.</span> <span class="nav-text">c语言通过jni调用java非静态域</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java端代码-2"><span class="nav-number">4.1.</span> <span class="nav-text">java端代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c端代码-2"><span class="nav-number">4.2.</span> <span class="nav-text">c端代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印结果-2"><span class="nav-number">4.3.</span> <span class="nav-text">打印结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结：-1"><span class="nav-number">4.4.</span> <span class="nav-text">小结：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c语言通过jni调用java静态域"><span class="nav-number">5.</span> <span class="nav-text">c语言通过jni调用java静态域</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java端代码-3"><span class="nav-number">5.1.</span> <span class="nav-text">java端代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c端代码-3"><span class="nav-number">5.2.</span> <span class="nav-text">c端代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印结果-3"><span class="nav-number">5.3.</span> <span class="nav-text">打印结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结：-2"><span class="nav-number">5.4.</span> <span class="nav-text">小结：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Acode</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"workertao"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
