@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="带缓冲的字符流的读取和写入," />
+  <meta name="keywords" content="android," />
 
 
 
@@ -86,20 +86,17 @@
 
 
 
-<meta name="description" content="文字不够，图片来凑……
-胡编乱造">
+<meta name="description" content="最近很懒，不想多说话">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java io的使用之带缓冲的字符流的读取和写入（四）">
-<meta property="og:url" content="http://workertao.coding.me/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/index.html">
+<meta property="og:title" content="相册+相机+大图轮播+banner轮播（封装）">
+<meta property="og:url" content="http://workertao.coding.me/2017/11/22/相册-相机-大图轮播-banner轮播（封装）/index.html">
 <meta property="og:site_name" content="Acode的技术总结">
-<meta property="og:description" content="文字不够，图片来凑……
-胡编乱造">
+<meta property="og:description" content="最近很懒，不想多说话">
 <meta property="og:image" content="http://ohdryj9ow.bkt.clouddn.com/y17.jpg">
-<meta property="og:updated_time" content="2017-02-13T07:11:26.809Z">
+<meta property="og:updated_time" content="2017-11-22T02:45:33.426Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java io的使用之带缓冲的字符流的读取和写入（四）">
-<meta name="twitter:description" content="文字不够，图片来凑……
-胡编乱造">
+<meta name="twitter:title" content="相册+相机+大图轮播+banner轮播（封装）">
+<meta name="twitter:description" content="最近很懒，不想多说话">
 <meta name="twitter:image" content="http://ohdryj9ow.bkt.clouddn.com/y17.jpg">
 
 
@@ -128,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://workertao.coding.me/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/"/>
+  <link rel="canonical" href="http://workertao.coding.me/2017/11/22/相册-相机-大图轮播-banner轮播（封装）/"/>
 
 
 
 
 
-  <title> java io的使用之带缓冲的字符流的读取和写入（四） | Acode的技术总结 </title>
+  <title> 相册+相机+大图轮播+banner轮播（封装） | Acode的技术总结 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -275,7 +272,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/">
+  <link itemprop="mainEntityOfPage" href="http://workertao.coding.me/2017/11/22/相册-相机-大图轮播-banner轮播（封装）/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Acode">
@@ -299,7 +296,7 @@
             
             
               
-                java io的使用之带缓冲的字符流的读取和写入（四）
+                相册+相机+大图轮播+banner轮播（封装）
               
             
           </h1>
@@ -312,8 +309,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-10T14:38:27+08:00">
-                2017-02-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-22T10:34:20+08:00">
+                2017-11-22
               </time>
             
 
@@ -331,8 +328,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
                   </a>
                 </span>
 
@@ -346,8 +343,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/" itemprop="commentCount"></span>
+                <a href="/2017/11/22/相册-相机-大图轮播-banner轮播（封装）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/22/相册-相机-大图轮播-banner轮播（封装）/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -373,54 +370,81 @@
       
 
       
-        <p>文字不够，图片来凑……</p>
-<p>胡编乱造</p>
+        <p>最近很懒，不想多说话</p>
 <p><img src="http://ohdryj9ow.bkt.clouddn.com/y17.jpg" alt="图1" title="图1"></p>
 <a id="more"></a>
-<pre><code>public static void main(String[] args) {
-    try {
-        File file = new File(&quot;java.txt&quot;);
-        FileInputStream fis = new FileInputStream(file);
-        InputStreamReader isr = new InputStreamReader(fis, &quot;UTF-8&quot;);
+<p>github地址：<a href="https://github.com/workertao/acode_img.git" target="_blank" rel="external">https://github.com/workertao/acode_img.git</a></p>
+<h2 id="相机功能"><a href="#相机功能" class="headerlink" title="相机功能"></a>相机功能</h2><pre><code>调用：
+Intent intent = new Intent(AcodePhotoShowActivity.this, AcodeCameraActivity.class);
+startActivityForResult(intent, AcodeCameraConfig.TAKE_PHOTO_REQUEST);
 
-        File new_file = new File(&quot;java_new_buffer.txt&quot;);
-        FileOutputStream fos = new FileOutputStream(new_file);
-        OutputStreamWriter osw = new OutputStreamWriter(fos, &quot;UTF-8&quot;);
-
-        //将字符流读取对象转换成带缓冲的读取对象
-        BufferedReader br = new BufferedReader(isr);
-        // 无换行符的写入，每回都是读取一行
-        BufferedWriter bw = new BufferedWriter(osw);
-        // 带有换行符的打印
-        //PrintWriter pw = new PrintWriter(osw);
-
-        //readLine()的返回结果是一个String,当返回null的时候说明读取完成
-        String input = &quot;&quot;;
-        while ((input = br.readLine()) != null) {
-        //pw.println(input);
-            bw.write(input);
-        }
-
-        //pw.flush();
-        bw.close();
-        br.close();
-        osw.close();
-        fos.close();
-        isr.close();
-        fis.close();
-
-        System.out.println(&quot;拷贝完成&quot;);
-    } catch (FileNotFoundException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    } catch (UnsupportedEncodingException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+返回数据：
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (data == null) {
+        return;
+    }
+    switch (requestCode) {
+        case AcodeCameraConfig.TAKE_PHOTO_REQUEST:
+            //获取绑定的数据源
+            Bundle bundle1 = data.getBundleExtra(&quot;bundle&quot;);
+            //获取绑定的返回的数据源
+            String photoPath = bundle1.getString(&quot;photo_path&quot;);
+            showImage(photoPath);
+            break;
     }
 }
+</code></pre><h2 id="相册功能（大图浏览，选中数量）"><a href="#相册功能（大图浏览，选中数量）" class="headerlink" title="相册功能（大图浏览，选中数量）"></a>相册功能（大图浏览，选中数量）</h2><pre><code>调用：
+Intent intent = new Intent(AcodePhotoShowActivity.this, AcodePhotoListActivity.class);
+startActivityForResult(intent, AcodeCameraConfig.SELECT_VP_REQUEST);
+
+返回数据：
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (data == null) {
+         return;
+    }
+    switch (requestCode) {
+        case AcodeCameraConfig.SELECT_VP_REQUEST:
+             //获取绑定的数据源
+             Bundle bundle = data.getBundleExtra(&quot;bundle&quot;);
+             //获取绑定的返回的数据源
+             ArrayList&lt;ImagePhoto&gt; imagePhotos = (ArrayList&lt;ImagePhoto&gt;) bundle.getSerializable(&quot;selectPhotoData&quot;);
+             for (int i = 0; i &lt; imagePhotos.size(); i++) {
+             ImageView imageView = new ImageView(this);
+             Glide.with(this)
+                        .load(imagePhotos.get(i).getPath())
+                        .into(imageView);
+                linearLayout.addView(imageView);
+             }
+        break;
+    }
+}
+</code></pre><h2 id="Banner轮播"><a href="#Banner轮播" class="headerlink" title="Banner轮播"></a>Banner轮播</h2><pre><code>XML调用(自定义view)：
+
+&lt;com.acode.img.lib.viewpager.weigt.banner.AcodeBannerVp
+     android:id=&quot;@+id/acode_banner_vp&quot;
+     android:layout_width=&quot;match_parent&quot;
+     android:layout_height=&quot;200dp&quot; /&gt;
+
+代码调用：
+AcodeBannerVp acodeBannerVp = (AcodeBannerVp) findViewById(R.id.acode_banner_vp);
+//设置banner图片数据源
+acodeBannerVp.setData(urls)
+         //设置banner文本内容数据源
+        .setAcodeTitleText(urls1)
+         //设置下标点的位置
+        .setAcodePointGravity(AcodeVpConfig.RIGHT)
+        //设置首次展示的banner图下标
+        .setFirstItem(47)
+        //设置是否自动轮播
+        .setIsAutoPlay(true)
+        //设置图片切换动画，已经封装，直接输入数字1-15即可
+        .setAcodeVpAnim(5)
+        //开始执行
+        .start();
 </code></pre>
       
     </div>
@@ -444,7 +468,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/带缓冲的字符流的读取和写入/" rel="tag"># 带缓冲的字符流的读取和写入</a>
+            <a href="/tags/android/" rel="tag"># android</a>
           
         </div>
       
@@ -453,8 +477,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/10/java-io的使用之字符流的读取和写入（三）/" rel="next" title="java io的使用之字符流的读取和写入（三）">
-                <i class="fa fa-chevron-left"></i> java io的使用之字符流的读取和写入（三）
+              <a href="/2017/09/05/知乎48条可爱的问答/" rel="next" title="知乎48条可爱的回答">
+                <i class="fa fa-chevron-left"></i> 知乎48条可爱的回答
               </a>
             
           </div>
@@ -462,10 +486,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/10/java-io的使用之纯文本文件的读取和写入（五）/" rel="prev" title="java io的使用之纯文本文件的读取和写入（五）">
-                java io的使用之纯文本文件的读取和写入（五） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -480,10 +500,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/"
-     data-title="java io的使用之带缓冲的字符流的读取和写入（四）"
+        <div class="ds-share flat" data-thread-key="2017/11/22/相册-相机-大图轮播-banner轮播（封装）/"
+     data-title="相册+相机+大图轮播+banner轮播（封装）"
      data-content=""
-     data-url="http://workertao.coding.me/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/">
+     data-url="http://workertao.coding.me/2017/11/22/相册-相机-大图轮播-banner轮播（封装）/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -510,8 +530,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/"
-           data-title="java io的使用之带缓冲的字符流的读取和写入（四）" data-url="http://workertao.coding.me/2017/02/10/java-io的使用之带缓冲的字符流的读取和写入（四）/">
+      <div class="ds-thread" data-thread-key="2017/11/22/相册-相机-大图轮播-banner轮播（封装）/"
+           data-title="相册+相机+大图轮播+banner轮播（封装）" data-url="http://workertao.coding.me/2017/11/22/相册-相机-大图轮播-banner轮播（封装）/">
       </div>
     
   </div>
@@ -535,8 +555,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oif1jvh5f.bkt.clouddn.com/nkplxvq2rntpng.png"
@@ -629,6 +658,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#相机功能"><span class="nav-number">1.</span> <span class="nav-text">相机功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相册功能（大图浏览，选中数量）"><span class="nav-number">2.</span> <span class="nav-text">相册功能（大图浏览，选中数量）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Banner轮播"><span class="nav-number">3.</span> <span class="nav-text">Banner轮播</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
